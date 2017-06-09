@@ -1,4 +1,6 @@
 from py2neo import *
+import csv
+
 gr=Graph(host="localhost",password="XXXyour passXXX",user="neo4j")
 
 """gr=Graph(password="XXXyour passXXXX")"""                                             #will also do as only authentication is required
