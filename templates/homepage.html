@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tool - Home</title>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+         {% if messages %}
+            <ul>
+               {% for message in messages %}
+               <li>{{ message }}</li>
+               {% endfor %}
+            </ul>
+         {% endif %}
+      {% endwith %}
+
+<fieldset>
+<legend>Upload your files..</legend>
+	<form action="http://127.0.0.1:5000/results/" method="post" enctype="multipart/form-data">
+	<dl>
+	<dt>Choose your file</dt>
+	<dd><input type="file" name="file" align="center"></dd><br>
+	<dt>DB password</dt>
+	<dd><input type="password" name="pass" placeholder="Password"></dd><br><br>
+	</dl>
+	<input type="submit" name="sbutton" value="UPLOAD" align="center">
+	</form>
+</fieldset>
+
+</body>
+</html>
