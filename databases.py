@@ -1,7 +1,7 @@
 from py2neo import *
-gr=Graph(host="localhost",password="Rakshit@1995",user="neo4j")
+gr=Graph(host="localhost",password="XXXyour passXXX",user="neo4j")
 
-"""gr=Graph(password="Rakshit@1995")"""                                                  #will also do as only authentication is required
+"""gr=Graph(password="XXXyour passXXXX")"""                                             #will also do as only authentication is required
 
 gr.run("merge (someone:masterchef{name:'someone',city:'chandigarh',age:22})")           #your query here
 
