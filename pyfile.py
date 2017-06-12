@@ -1,13 +1,15 @@
-"""AUTHOR : RAKSHIT KAPOOR"""
+"""AUTHOR      : RAKSHIT KAPOOR
+   INSTITUTION : NIT Jalandhar"""
 
 import os
 from flask import *
 from werkzeug import secure_filename
 import csv
 from py2neo import *
+import time
 
 ALLOWED_EXTENSIONS = set(['csv'])
-UPLOAD_FOLDER="C:/Users/ANIL KAPOOR/Documents/Neo4j/Ticketanalysisdb/import/"
+UPLOAD_FOLDER="C:/Users/R6000670/Documents/Neo4j/Ticketanalysisdb/import/"
 
 app=Flask(__name__)
 app.secret_key = 'random string'
@@ -21,8 +23,13 @@ def allowed_files(filename):
 def home():
     return render_template('homepage.html')
 
+@app.route('/alreadyuploaded')
+def alreadyuploaded():
+	return render_template('resultspage.html',contenttype=".csv",tm=0)
+
 @app.route('/results/',methods=['post'])
 def results():
+	st=time.time()
 	passw=request.form['pass']
 	file=request.files['file']
 	if file.filename=='':
@@ -48,7 +55,7 @@ def results():
 		itolist=set()
 		dolist=set()
 
-		with open('C:\\Users\\ANIL KAPOOR\\Documents\\Neo4j\\Ticketanalysisdb\\import\\'+securedfile) as csvfile:
+		with open('C:\\Users\\R6000670\\Documents\\Neo4j\\Ticketanalysisdb\\import\\'+securedfile) as csvfile:
 			reader = csv.DictReader(csvfile)
 			for row in reader:
 				tt=row['Ticket_Type']
@@ -152,14 +159,24 @@ def results():
 		for i in itolist:
 			gr.run("MATCH (a:tempdata),(b:IT_OWNER_ID) WHERE a.it_owner_id = " + str(i) + " AND b.ITOWNERID ="+ str(i)+ " MERGE (a)-[r:ITOWNERID]->(b)")
 
+		return render_template('resultspage.html',contenttype=ctype,tm=time.time()-st)
 
+@app.route('/analysis/',methods=['post'])
+def analysis():
+	passw=request.form['password']
+	gr=Graph(password=passw)
+	keys=[]
+	vals=[]
+	txt=request.form["query"]
+	properties=list(txt.split(','))
+	for i in properties:
+		k,v=i.split(':')
+		keys.append(k)
+		vals.append(v)
+	props=dict(zip(keys,vals))
+	print(gr.run("Match (a:tempdata"+str(props)+") return count(*)").data())
+	return render_template('analysispage.html')
 
-	return render_template('resultspage.html',contenttype=ctype)
-		#return redirect(url_for("uploaded",securedfile=securedfile))
-
-#@app.route('/uploads/<securedfile>')
-#def uploaded(securedfile):
-#	return send_from_directory(app.config['UPLOAD_FOLDER'],securedfile)
 
 if __name__=='__main__':
     app.debug=True
