@@ -24,7 +24,6 @@ def home():
 @app.route('/results/',methods=['post'])
 def results():
 	passw=request.form['pass']
-	gr=Graph(password=passw)
 	file=request.files['file']
 	if file.filename=='':
 		flash("No file was selected !!")
@@ -35,6 +34,7 @@ def results():
 		flash("Choose your file again")
 		return redirect(url_for("home"))
 	else:
+		gr=Graph(password=passw)
 		securedfile=secure_filename(file.filename)
 
 		if not os.path.exists(UPLOAD_FOLDER):
