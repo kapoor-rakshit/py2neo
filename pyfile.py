@@ -174,7 +174,14 @@ def analysis():
 		keys.append(k)
 		vals.append(v)
 	props=dict(zip(keys,vals))
-	print(gr.run("Match (a:tempdata"+str(props)+") return count(*)").data())
+	propsstr="{"
+	for i,j in props.items():
+		propsstr+=i+":"
+		propsstr+="'"+j+"',"
+	l=len(propsstr)
+	propsstr=propsstr[:l-1]
+	propsstr+="}"
+	print(gr.run("Match (a:tempdata"+propsstr+") return count(*)").data())
 	return render_template('analysispage.html')
 
 
