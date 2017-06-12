@@ -7,6 +7,23 @@
 
 <b>Voila !! File Uploaded Successfully !!</b>
 <br><br>
+<fieldset>
+	<form action="http://127.0.0.1:5000/analysis/" method="post">
+	Enter password if data was already uploaded:<br>
+	<input type="password" name="password" placeholder="DB password">
+	<br><br><br>
+	Enter keywords with delimiter as <b>','</b> here :
+	<br><br>
+	Example: <b>severity:1 - Minor, request_id:1526, ......</b>
+	<br><br>
+	<input type="text" name="query" placeholder="query here" style="width: 350px;height: 30px;font-size: 17px" autofocus required>
+	<br><br>
+	<input type="submit" name="submit" value="SUBMIT" style="cursor: pointer;">
+</form>
+</fieldset>
+<br><br>
 Type of file uploaded : {{contenttype}}
+<br>
+Results fetched in : {{tm}} seconds
 </body>
 </html>
