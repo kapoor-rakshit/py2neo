@@ -171,8 +171,16 @@ def analysis():
 	valuesrqid=[]
 	labelsrqid=[]
 	tempvalues=[]
+	valuesprop=[]
+	labelsprop=[]
+	rqid=""
+	idval=""
+	prop=""
+	txtprop=""
+	temppropvalues=[]
 	txt=request.form["query"]
 	txtrqid=request.form["rqidquery"]
+	txtprop=request.form["propquery"]
 	if not txt=="":
 		properties=list(txt.split(','))
 		for i in properties:
@@ -192,7 +200,7 @@ def analysis():
 		for i in sq:
 			valuessing.append(int(i['count(*)']))
 		valtochart=valuessing[0]
-	print(valuessing)
+	#print(valuessing)
 
 	if not txtrqid=="":
 		rqid,prop=txtrqid.split(",")
@@ -207,9 +215,21 @@ def analysis():
 		for i in range(0,l,2):
 			labelsrqid.append(tempvalues[i])
 			valuesrqid.append(tempvalues[i+1])
-	print(labelsrqid)
-	print(valuesrqid)
-	if((len(labelsrqid)==0 and txtrqid!="") or (len(valuessing)==0 and txt!="")):
+	#print(labelsrqid)
+	#print(valuesrqid)
+	if not txtprop=="":
+		propq=gr.run("match (a:tempdata) return a."+txtprop+",count(a)").data()
+		for i in propq:
+			for j,k in i.items():
+				temppropvalues.append(k)
+		l=len(temppropvalues)
+		for i in range(0,l,2):
+			labelsprop.append(temppropvalues[i])
+			valuesprop.append(temppropvalues[i+1])
+	#print(labelsprop)
+	#print(valuesprop)
+
+	if((len(labelsrqid)==0 and txtrqid!="") or (len(valuessing)==0 and txt!="") or (len(valuesprop)==0 and txtprop!="")):
 		flash("Your one or more query didn't match database records !!")
 		flash("Try Again !!")
 		return redirect(url_for("alreadyuploaded"))
@@ -217,7 +237,7 @@ def analysis():
 		propsstr="NA"
 		valtochart="NA"
 
-	return render_template('analysispage.html',valtochart=valtochart,propsstr=propsstr,valuesrqid=valuesrqid,labelsrqid=labelsrqid,rqid=rqid,idval=idval,prop=prop)
+	return render_template('analysispage.html',valtochart=valtochart,propsstr=propsstr,valuesrqid=valuesrqid,labelsrqid=labelsrqid,rqid=rqid,idval=idval,prop=prop,labelsprop=labelsprop,valuesprop=valuesprop,txtprop=txtprop)
 
 
 if __name__=='__main__':
