@@ -25,12 +25,10 @@ def home():
 
 @app.route('/alreadyuploaded')
 def alreadyuploaded():
-	return render_template('resultspage.html',contenttype=".csv",tm=0)
+	return render_template('resultspage.html',contenttype=".csv",tm=0,passval="")
 
 @app.route('/results/',methods=['post'])
 def results():
-	st=time.time()
-	passw=request.form['pass']
 	file=request.files['file']
 	if file.filename=='':
 		flash("No file was selected !!")
@@ -41,6 +39,8 @@ def results():
 		flash("Choose your file again")
 		return redirect(url_for("home"))
 	else:
+		st=time.time()
+		passw=request.form['pass']
 		gr=Graph(password=passw)
 		securedfile=secure_filename(file.filename)
 
@@ -159,7 +159,7 @@ def results():
 		for i in itolist:
 			gr.run("MATCH (a:tempdata),(b:IT_OWNER_ID) WHERE a.it_owner_id = " + str(i) + " AND b.ITOWNERID ="+ str(i)+ " MERGE (a)-[r:ITOWNERID]->(b)")
 
-		return render_template('resultspage.html',contenttype=ctype,tm=time.time()-st)
+		return render_template('resultspage.html',contenttype=ctype,tm=time.time()-st,passval=passw)
 
 @app.route('/analysis/',methods=['post'])
 def analysis():
@@ -167,22 +167,57 @@ def analysis():
 	gr=Graph(password=passw)
 	keys=[]
 	vals=[]
+	valuessing=[]
+	valuesrqid=[]
+	labelsrqid=[]
+	tempvalues=[]
 	txt=request.form["query"]
-	properties=list(txt.split(','))
-	for i in properties:
-		k,v=i.split(':')
-		keys.append(k)
-		vals.append(v)
-	props=dict(zip(keys,vals))
-	propsstr="{"
-	for i,j in props.items():
-		propsstr+=i+":"
-		propsstr+="'"+j+"',"
-	l=len(propsstr)
-	propsstr=propsstr[:l-1]
-	propsstr+="}"
-	print(gr.run("Match (a:tempdata"+propsstr+") return count(*)").data())
-	return render_template('analysispage.html')
+	txtrqid=request.form["rqidquery"]
+	if not txt=="":
+		properties=list(txt.split(','))
+		for i in properties:
+			k,v=i.split(':')
+			keys.append(k)
+			vals.append(v)
+		props=dict(zip(keys,vals))
+		propsstr="{"
+		for i,j in props.items():
+			propsstr+=i+":"
+			propsstr+="'"+j+"',"
+		l=len(propsstr)
+		propsstr=propsstr[:l-1]
+		propsstr+="}"
+		sq=gr.run("Match (a:tempdata"+propsstr+") return count(*)").data()
+		
+		for i in sq:
+			valuessing.append(int(i['count(*)']))
+		valtochart=valuessing[0]
+	print(valuessing)
+
+	if not txtrqid=="":
+		rqid,prop=txtrqid.split(",")
+		rqid,idval=rqid.split(":")
+		rqidq=gr.run("match (a:tempdata{"+rqid+":"+idval+"})--(n:"+prop+") return n."+prop+",count(n)").data()
+		
+		for i in rqidq:
+			for j,k in i.items():
+				tempvalues.append(k)
+		l=len(tempvalues)
+		
+		for i in range(0,l,2):
+			labelsrqid.append(tempvalues[i])
+			valuesrqid.append(tempvalues[i+1])
+	print(labelsrqid)
+	print(valuesrqid)
+	if((len(labelsrqid)==0 and txtrqid!="") or (len(valuessing)==0 and txt!="")):
+		flash("Your one or more query didn't match database records !!")
+		flash("Try Again !!")
+		return redirect(url_for("alreadyuploaded"))
+	if txt=="":
+		propsstr="NA"
+		valtochart="NA"
+
+	return render_template('analysispage.html',valtochart=valtochart,propsstr=propsstr,valuesrqid=valuesrqid,labelsrqid=labelsrqid,rqid=rqid,idval=idval,prop=prop)
 
 
 if __name__=='__main__':
