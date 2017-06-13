@@ -2,8 +2,44 @@
 <html>
 <head>
 	<title>Tool - Analysis</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 <body>
-You are on Analysis page
+You are right here on Analysis
+<br>
+<b style="font-size: 20px">No. of tickets with {{propsstr}} are :</b><i>{{valtochart}}</i>
+<br><br>
+<i>Data for <b>{{rqid}} : {{idval}} 's {{prop}} 's'</b> handled:</i>
+<br><br> 
+<canvas id="pie" widht="400" height="100"></canvas>
+<script>
+
+ var ctx = document.getElementById("pie").getContext('2d');
+ var myChart = new Chart(ctx, {
+  type: 'pie',                               // 'pie' and 'doughnut' are same except the cutoutPercentage by default is 0 and 50 respectively
+  data: {
+    labels: [{%for i in labelsrqid%}
+    "{{i}}",
+             {%endfor%}],
+    datasets: [{
+      backgroundColor: [
+       "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA","#ABCDEF", "#AADDDD", "#ABCABC" , "#FAFAAA"
+      ],
+      data: [{%for i in valuesrqid%}
+      "{{i}}",
+              {%endfor%}]
+    }]
+  },
+  options:{                            // The percentage of the chart that is cut out of the middle.
+    animation:{
+      animateRotate:true,                           // If true, the chart will animate in with a rotation animation.
+      animateScale:false                           // If true, will animate scaling the chart from the center outwards.
+    },
+    rotation:-0.5*Math.PI                           // Starting angle to draw arcs from.
+  }
+});
+
+</script>
+
 </body>
 </html>

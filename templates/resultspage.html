@@ -5,19 +5,63 @@
 </head>
 <body>
 
+{% with messages = get_flashed_messages() %}
+         {% if messages %}
+            <ul>
+               {% for message in messages %}
+               <li>{{ message }}</li>
+               {% endfor %}
+            </ul>
+         {% endif %}
+      {% endwith %}
+
+
 <b>Voila !! File Uploaded Successfully !!</b>
 <br><br>
 <fieldset>
 	<form action="http://127.0.0.1:5000/analysis/" method="post">
 	Enter password:<br>
-	<input type="password" name="password" placeholder="DB password" required>
+	<input type="password" name="password" placeholder="DB password" value="{{passval}}" required autofocus>
 	<br><br><br>
-	Enter keywords with delimiter as <b>','</b> here :
+	Enter keywords with delimiter as <b><i>','</i></b> here for count:
+	<br>
+	Example: <b>severity:1 - Minor, request_id:1526, ......<br>
+	</b><ul>
+	<li>severity<b>:</b>(intcode)(space)(-)(space)(Type)
+	<li>request_id<b>:</b>(intcode)
+	<li>days_open<b>:</b>(intcode)
+	<li>filed_against<b>:</b>(Type)
+	<li>it_owner_id<b>:</b>(intcode)</li>
+	<li>priority<b>:</b>(intcode)(space)(-)(space)(Type)</li>
+	<li>requester_seniority<b>:</b>(intcode)(space)(-)(space)(Type)</li>
+	<li>satisfaction<b>:</b>(intcode)(space)(-)(space)(Type)</li>
+	<li>ticket_type<b>:</b>(Type)</li>
+	</ul>
+	<br>
+	<input type="text" name="query" placeholder="query for single data" style="width: 350px;height: 30px;font-size: 17px" autofocus>
 	<br><br>
-	Example: <b>severity:1 - Minor, request_id:1526, ......</b>
+
+	Enter id and property to compare related to request_id OR it_owner_id:<br>
+	Example: <b>it_owner_id:22, Severity</b><br>
+	<ul>
+		<li>request_id<b>:</b>(intcode)</li>
+		<li>it_owner_id<b>:</b>(intcode)</li>
+	</ul><br>
+	<b>Properties format:</b><br>
+	<ul>
+		<li>Severity</li>
+		<li>RequesterID</li>
+		<li>DaysOpen</li>
+		<li>FiledAgainst</li>
+		<li>IT_OWNER_ID</li>
+		<li>Priority</li>
+		<li>RequesterSeniority</li>
+		<li>Satisfaction</li>
+		<li>TicketType</li>
+	</ul>
+	<input type="text" name="rqidquery" placeholder="query related to requester/itowner" style="width: 350px;height: 30px;font-size: 17px">
 	<br><br>
-	<input type="text" name="query" placeholder="query here" style="width: 350px;height: 30px;font-size: 17px" autofocus required>
-	<br><br>
+
 	<input type="submit" name="submit" value="SUBMIT" style="cursor: pointer;">
 </form>
 </fieldset>
