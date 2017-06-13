@@ -7,11 +7,12 @@
 <body>
 You are right here on Analysis
 <br>
-<b style="font-size: 20px">No. of tickets with {{propsstr}} are :</b><i>{{valtochart}}</i>
-<br><br>
-<i>Data for <b>{{rqid}} : {{idval}} 's {{prop}} 's'</b> handled:</i>
+<center>
+<b style="font-size: 20px;">No. of tickets with {{propsstr}} are :</b><i>{{valtochart}}</i></center>
 <br><br> 
 <canvas id="pie" widht="400" height="100"></canvas>
+<br><br>
+<canvas id="bar" width="400" height="100"></canvas>
 <script>
 
  var ctx = document.getElementById("pie").getContext('2d');
@@ -30,12 +31,60 @@ You are right here on Analysis
               {%endfor%}]
     }]
   },
-  options:{                            // The percentage of the chart that is cut out of the middle.
+  options:{ 
+  title:{
+    display:true,
+    text:"Classification of {{rqid}} : {{idval}} 's {{prop}}"
+  },                           // The percentage of the chart that is cut out of the middle.
     animation:{
       animateRotate:true,                           // If true, the chart will animate in with a rotation animation.
       animateScale:false                           // If true, will animate scaling the chart from the center outwards.
     },
     rotation:-0.5*Math.PI                           // Starting angle to draw arcs from.
+  }
+}); 
+ var ctx1 = document.getElementById("bar").getContext('2d');
+if({{valuesrqid|length}}==0)
+ctx1=ctx;
+
+ var myChart = new Chart(ctx1, {
+  type: 'bar',                               // 'pie' and 'doughnut' are same except the cutoutPercentage by default is 0 and 50 respectively
+  data: {
+    labels: [{%for i in labelsprop%}
+    "{{i}}",
+             {%endfor%}],
+    datasets: [{
+      label:"{{txtprop}}",
+      backgroundColor: [
+       "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA","#ABCDEF", "#AADDDD", "#ABCABC" , "#FAFAAA"
+      ],
+      data: [{%for i in valuesprop%}
+      "{{i}}",
+              {%endfor%}]
+    }]
+  },
+  options:{
+     title:{
+    display:true,
+    text:"Classification of {{txtprop}}"
+  }, 
+    scales: {
+        yAxes: [{ 
+          scaleLabel: {
+            display: true,
+            labelString: "Value"
+          },
+         ticks:{
+            beginAtZero:true
+          }
+        }],
+        xAxes: [{ 
+          scaleLabel: {
+            display: true,
+            labelString: "{{txtprop}}"
+          }
+        }]
+      }
   }
 });
 

@@ -23,7 +23,8 @@
 	Enter password:<br>
 	<input type="password" name="password" placeholder="DB password" value="{{passval}}" required autofocus>
 	<br><br><br>
-	Enter keywords with delimiter as <b><i>','</i></b> here for count:
+	<ol>
+	<li>Count field : Enter keywords with delimiter as <b><i>','</i></b>:
 	<br>
 	Example: <b>severity:1 - Minor, request_id:1526, ......<br>
 	</b><ul>
@@ -41,7 +42,7 @@
 	<input type="text" name="query" placeholder="query for single data" style="width: 350px;height: 30px;font-size: 17px" autofocus>
 	<br><br>
 
-	Enter id and property to compare related to request_id OR it_owner_id:<br>
+	<li>request_id OR it_owner_id field : Enter id and property to compare:<br>
 	Example: <b>it_owner_id:22, Severity</b><br>
 	<ul>
 		<li>request_id<b>:</b>(intcode)</li>
@@ -62,12 +63,29 @@
 	<input type="text" name="rqidquery" placeholder="query related to requester/itowner" style="width: 350px;height: 30px;font-size: 17px">
 	<br><br>
 
+<li>property field : Enter a property to visualize it
+<br>
+Example : <b>severity</b><br>
+<ul>
+	<li>severity
+	<li>request_id
+	<li>days_open
+	<li>filed_against
+	<li>it_owner_id
+	<li>priority
+	<li>requester_seniority
+	<li>satisfaction
+	<li>ticket_type
+</ul>
+<input type="text" name="propquery" placeholder="query related to property" style="width: 350px;height: 30px;font-size: 17px">
+<br><br>
 	<input type="submit" name="submit" value="SUBMIT" style="cursor: pointer;">
 </form>
 </fieldset>
-<br><br>
+<br>
 Type of file uploaded : {{contenttype}}
 <br>
 Results fetched in : {{tm}} seconds
+<br><br>
 </body>
 </html>
