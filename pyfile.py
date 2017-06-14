@@ -177,6 +177,7 @@ def analysis():
 	idval=""
 	prop=""
 	txtprop=""
+	valtochart=""
 	temppropvalues=[]
 	txt=request.form["query"]
 	txtrqid=request.form["rqidquery"]
@@ -229,7 +230,7 @@ def analysis():
 	#print(labelsprop)
 	#print(valuesprop)
 
-	if((len(labelsrqid)==0 and txtrqid!="") or (len(valuessing)==0 and txt!="") or (len(valuesprop)==0 and txtprop!="")):
+	if((len(labelsrqid)==0 and txtrqid!="") or (valtochart==0 and txt!="") or (labelsprop[0]==None and txtprop!="")):
 		flash("Your one or more query didn't match database records !!")
 		flash("Try Again !!")
 		return redirect(url_for("alreadyuploaded"))
