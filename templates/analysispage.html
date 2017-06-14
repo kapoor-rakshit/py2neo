@@ -8,11 +8,13 @@
 You are right here on Analysis
 <br>
 <center>
+{%if valtochart!="NA"%}
 <b style="font-size: 20px;">No. of tickets with {{propsstr}} are :</b><i>{{valtochart}}</i></center>
+{%endif%}
 <br><br> 
 <canvas id="pie" widht="400" height="100"></canvas>
 <br><br>
-<canvas id="bar" width="400" height="100"></canvas>
+<canvas id="bar" width="400" height="300"></canvas>
 <script>
 
  var ctx = document.getElementById("pie").getContext('2d');
