@@ -16,8 +16,8 @@ You are right here on Analysis
 <br><br>
 <canvas id="bar" width="400" height="300"></canvas>
 <script>
-
- var ctx = document.getElementById("pie").getContext('2d');
+var ctx = document.getElementById("pie").getContext('2d');
+if({{valuesrqid|length}}!=0){
  var myChart = new Chart(ctx, {
   type: 'pie',                               // 'pie' and 'doughnut' are same except the cutoutPercentage by default is 0 and 50 respectively
   data: {
@@ -45,6 +45,7 @@ You are right here on Analysis
     rotation:-0.5*Math.PI                           // Starting angle to draw arcs from.
   }
 }); 
+}
  if({{valuesprop|length}}!=0){
  var ctx1 = document.getElementById("bar").getContext('2d');
 if({{valuesrqid|length}}==0)
