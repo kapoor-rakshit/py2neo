@@ -186,9 +186,10 @@ def analysis():
 		properties=list(txt.split(','))
 		for i in properties:
 			k,v=i.split(':')
-			keys.append(k)
-			vals.append(v)
+			keys.append(k.lower())
+			vals.append(v.title())
 		props=dict(zip(keys,vals))
+	#print(props)
 		propsstr="{"
 		for i,j in props.items():
 			propsstr+=i+":"
@@ -206,6 +207,7 @@ def analysis():
 	if not txtrqid=="":
 		rqid,prop=txtrqid.split(",")
 		rqid,idval=rqid.split(":")
+		rqid=rqid.lower()
 		rqidq=gr.run("match (a:tempdata{"+rqid+":"+idval+"})--(n:"+prop+") return n."+prop+",count(n)").data()
 		
 		for i in rqidq:
@@ -219,6 +221,7 @@ def analysis():
 	#print(labelsrqid)
 	#print(valuesrqid)
 	if not txtprop=="":
+		txtprop=txtprop.lower()
 		propq=gr.run("match (a:tempdata) return a."+txtprop+",count(a)").data()
 		for i in propq:
 			for j,k in i.items():
@@ -230,7 +233,7 @@ def analysis():
 	#print(labelsprop)
 	#print(valuesprop)
 
-	if((len(labelsrqid)==0 and txtrqid!="") or (valtochart==0 and txt!="") or (labelsprop[0]==None and txtprop!="")):
+	if((len(labelsrqid)==0 and txtrqid!="") or (valtochart==0 and txt!="") or (len(labelsprop)!=0 and labelsprop[0]==None and txtprop!="")):
 		flash("Your one or more query didn't match database records !!")
 		flash("Try Again !!")
 		return redirect(url_for("alreadyuploaded"))
