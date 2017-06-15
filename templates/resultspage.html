@@ -24,9 +24,9 @@
 	<input type="password" name="password" placeholder="DB password" value="{{passval}}" required autofocus>
 	<br><br><br>
 	<ol>
-	<li><b style="font-style: italic;">Count field</b>: Enter keywords with delimiter as <b><i>','</i></b>:
+	<li><b style="font-style: italic;">COUNT FIELD</b>: Enter keywords with delimiter as <b><i>','</i></b>:
 	<br>
-	Example: <b>severity:1 - Minor, request_id:1526, ......<br>
+	Example: <b>sEVEriTY:1 - MiNoR, TiCKeT_TyPE:iSsuE, reQueSter_SenIORIty:1 - jUNIoR......<br>
 	</b><ul>
 	<li>severity<b>:</b>(intcode)(space)(-)(space)(Type)
 	<li>filed_against<b>:</b>(Type)
@@ -39,13 +39,13 @@
 	<input type="text" name="query" placeholder="query for Count" style="width: 350px;height: 30px;font-size: 17px" autofocus>
 	<br><br>
 
-	<li><b style="font-style: italic;">request_id OR it_owner_id field</b>: Enter id and property to compare:<br>
-	Example: <b>it_owner_id:22, Severity</b><br>
+	<li><b style="font-style: italic;">REQUEST_ID or IT_OWNER_ID FIELD</b>: Enter id and property to compare:<br>
+	Example: <b>iT_oWneR_id:22, SeVEritY</b><br>
 	<ul>
 		<li>request_id<b>:</b>(intcode)</li>
 		<li>it_owner_id<b>:</b>(intcode)</li>
 	</ul><br>
-	<b>IMPORTANT : Properties format:</b><br>
+	<b>Properties format:</b><br>
 	<ul>
 		<li>Severity</li>
 		<li>RequesterID</li>
@@ -57,12 +57,12 @@
 		<li>Satisfaction</li>
 		<li>TicketType</li>
 	</ul>
-	<input type="text" name="rqidquery" placeholder="query related to request_id/it_owner_id" style="width: 350px;height: 30px;font-size: 17px">
+	<input type="text" name="rqidquery" placeholder="query related to REQUEST_ID/IT_OWNER_ID" style="width: 350px;height: 30px;font-size: 17px">
 	<br><br>
 
-<li><b style="font-style: italic;">property field</b>: Enter a property to visualize it
+<li><b style="font-style: italic;">PROPERTY FIELD</b>: Enter a property to visualize it
 <br>
-Example : <b>severity</b><br>
+Example : <b>sEvERiTy</b><br>
 <ul>
 	<li>severity
 	<li>request_id
@@ -74,7 +74,7 @@ Example : <b>severity</b><br>
 	<li>satisfaction
 	<li>ticket_type
 </ul>
-<input type="text" name="propquery" placeholder="query related to property" style="width: 350px;height: 30px;font-size: 17px">
+<input type="text" name="propquery" placeholder="query related to PROPERTY" style="width: 350px;height: 30px;font-size: 17px">
 <br><br>
 	<input type="submit" name="submit" value="SUBMIT" style="cursor: pointer;">
 </form>
