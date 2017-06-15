@@ -208,6 +208,15 @@ def analysis():
 		rqid,prop=txtrqid.split(",")
 		rqid,idval=rqid.split(":")
 		rqid=rqid.lower()
+		prop=prop.capitalize()
+		if prop=="Daysopen":
+			prop="DaysOpen"
+		if prop=="Tickettype":
+			prop="TicketType"
+		if prop=="Requesterseniority":
+			prop="RequesterSeniority"
+		if prop=="Filedagainst":
+			prop="FiledAgainst"
 		rqidq=gr.run("match (a:tempdata{"+rqid+":"+idval+"})--(n:"+prop+") return n."+prop+",count(n)").data()
 		
 		for i in rqidq:
