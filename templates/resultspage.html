@@ -22,30 +22,31 @@
 	<form action="http://127.0.0.1:5000/analysis/" method="post" target="_blank">
 	Enter password:<br>
 	<input type="password" name="password" placeholder="DB password" value="{{passval}}" required autofocus>
-	<br><br><br>
+	<br><br>
+	<b>NOTE : Mind the typo, reST LeaVE On uS</b><br><br>
 	<ol>
 	<li><b style="font-style: italic;">COUNT FIELD</b>: Enter keywords with delimiter as <b><i>','</i></b>:
 	<br>
-	Example: <b>sEVEriTY:1 - MiNoR, TiCKeT_TyPE:iSsuE, reQueSter_SenIORIty:1 - jUNIoR......<br>
+	Example: <b>sEVEriTY:1 - MiNoR , TiCKeT_TyPE:iSsuE , reQueSter_SenIORIty:1 - jUNIoR......<br>
 	</b><ul>
-	<li>severity<b>:</b>(intcode)(space)(-)(space)(Type)
-	<li>filed_against<b>:</b>(Type)
-	<li>priority<b>:</b>(intcode)(space)(-)(space)(Type)</li>
-	<li>requester_seniority<b>:</b>(intcode)(space)(-)(space)(Type)</li>
-	<li>satisfaction<b>:</b>(intcode)(space)(-)(space)(Type)</li>
-	<li>ticket_type<b>:</b>(Type)</li>
+	<li>severity<b> : </b>(intcode)(space)(-)(space)(Type)
+	<li>filed_against<b> : </b>(Type)
+	<li>priority<b> : </b>(intcode)(space)(-)(space)(Type)</li>
+	<li>requester_seniority<b> : </b>(intcode)(space)(-)(space)(Type)</li>
+	<li>satisfaction<b> : </b>(intcode)(space)(-)(space)(Type)</li>
+	<li>ticket_type<b> : </b>(Type)</li>
 	</ul>
 	<br>
 	<input type="text" name="query" placeholder="query for Count" style="width: 350px;height: 30px;font-size: 17px" autofocus>
 	<br><br>
 
 	<li><b style="font-style: italic;">REQUEST_ID or IT_OWNER_ID FIELD</b>: Enter id and property to compare:<br>
-	Example: <b>iT_oWneR_id:22, SeVEritY</b><br>
+	Example: <b>iT_oWneR_id : 22 , SeVEritY</b><br>
 	<ul>
-		<li>request_id<b>:</b>(intcode)</li>
-		<li>it_owner_id<b>:</b>(intcode)</li>
+		<li>request_id<b> : </b>(intcode)</li>
+		<li>it_owner_id<b> : </b>(intcode)</li>
 	</ul><br>
-	<b>Properties format:</b><br>
+	<b>Properties:</b><br>
 	<ul>
 		<li>Severity</li>
 		<li>RequesterID</li>
