@@ -179,15 +179,15 @@ def analysis():
 	txtprop=""
 	valtochart=""
 	temppropvalues=[]
-	txt=request.form["query"]
-	txtrqid=request.form["rqidquery"]
-	txtprop=request.form["propquery"]
+	txt=request.form["query"].strip()
+	txtrqid=request.form["rqidquery"].strip()
+	txtprop=request.form["propquery"].strip()
 	if not txt=="":
 		properties=list(txt.split(','))
 		for i in properties:
 			k,v=i.split(':')
-			keys.append(k.lower())
-			vals.append(v.title())
+			keys.append(k.strip().lower())
+			vals.append(v.strip().title())
 		props=dict(zip(keys,vals))
 	#print(props)
 		propsstr="{"
@@ -207,8 +207,9 @@ def analysis():
 	if not txtrqid=="":
 		rqid,prop=txtrqid.split(",")
 		rqid,idval=rqid.split(":")
-		rqid=rqid.lower()
-		prop=prop.capitalize()
+		rqid=rqid.strip().lower()
+		idval=idval.strip()
+		prop=prop.strip().capitalize()
 		if prop=="Daysopen":
 			prop="DaysOpen"
 		if prop=="Tickettype":
@@ -230,7 +231,7 @@ def analysis():
 	#print(labelsrqid)
 	#print(valuesrqid)
 	if not txtprop=="":
-		txtprop=txtprop.lower()
+		txtprop=txtprop.strip().lower()
 		propq=gr.run("match (a:tempdata) return a."+txtprop+",count(a)").data()
 		for i in propq:
 			for j,k in i.items():
