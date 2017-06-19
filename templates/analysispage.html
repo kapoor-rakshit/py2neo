@@ -7,17 +7,31 @@
 <body>
 You are right here on Analysis
 <br>
-<center>
 {%if valtochart!="NA"%}
-<b style="font-size: 20px;">No. of tickets with {{propsstr}} are :</b><i>{{valtochart}}</i></center>
-{%endif%}
-<br><br> 
-<canvas id="pie" widht="400" height="100"></canvas>
+<center>
+<b style="font-size: 20px;">No. of tickets with {{propsstr}} are : </b><i>{{valtochart}}</i></center>
 <br><br>
-<canvas id="bar" width="400" height="300"></canvas>
+{%endif%}
+<center>
+<table>
+<tr>
+{% if valuesrqid|length!=0 %}
+<td>
+  <fieldset><canvas id="pie" width="500" height="500"></canvas></fieldset>
+</td>
+{%endif%}
+{% if valuesprop|length!=0 %}
+<td>
+<fieldset><canvas id="bar" width="600" height="500"></canvas></fieldset>
+</td>
+{%endif%}
+</tr>
+</table>
+</center>
 <script>
-var ctx = document.getElementById("pie").getContext('2d');
 if({{valuesrqid|length}}!=0){
+  var ctx = document.getElementById("pie").getContext('2d');
+
  var myChart = new Chart(ctx, {
   type: 'pie',                               // 'pie' and 'doughnut' are same except the cutoutPercentage by default is 0 and 50 respectively
   data: {
@@ -36,7 +50,9 @@ if({{valuesrqid|length}}!=0){
   options:{ 
   title:{
     display:true,
-    text:"Classification of {{rqid}} : {{idval}} 's {{prop}}"
+    text:"Classification of {{rqid|upper}} : {{idval}} 's {{prop|title}}",
+    fontSize:18,
+    fontStyle:"italic"
   },                           // The percentage of the chart that is cut out of the middle.
     animation:{
       animateRotate:true,                           // If true, the chart will animate in with a rotation animation.
@@ -48,8 +64,6 @@ if({{valuesrqid|length}}!=0){
 }
  if({{valuesprop|length}}!=0){
  var ctx1 = document.getElementById("bar").getContext('2d');
-if({{valuesrqid|length}}==0)
-ctx1=ctx;
 
  var myChart = new Chart(ctx1, {
   type: 'bar',                               // 'pie' and 'doughnut' are same except the cutoutPercentage by default is 0 and 50 respectively
@@ -70,13 +84,17 @@ ctx1=ctx;
   options:{
      title:{
     display:true,
-    text:"Classification of {{txtprop}}"
+    text:"Classification of {{txtprop|title}}",
+    fontSize:18,
+    fontStyle:"italic"
   }, 
     scales: {
         yAxes: [{ 
           scaleLabel: {
             display: true,
-            labelString: "Value"
+            labelString: "Value",
+            fontSize:15,
+            fontStyle:"bold"
           },
          ticks:{
             beginAtZero:true
@@ -85,7 +103,9 @@ ctx1=ctx;
         xAxes: [{ 
           scaleLabel: {
             display: true,
-            labelString: "{{txtprop}}"
+            labelString: "{{txtprop|title}}",
+            fontSize:15,
+            fontStyle:"bold"
           }
         }]
       }
