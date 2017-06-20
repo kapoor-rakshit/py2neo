@@ -15,6 +15,21 @@
          {% endif %}
       {% endwith %}
 
+<datalist id="words">
+  <option value="HTML">
+  <option value="CSS">
+  <option value="JavaScript">
+  <option value="Java">
+  <option value="Ruby">
+  <option value="PHP">
+  <option value="Go">
+  <option value="Erlang">
+  <option value="Python">
+  <option value="C">
+  <option value="C#">
+  <option value="C++">
+</datalist>
+
 
 <b>Voila !! File Uploaded Successfully !!</b>
 <br><br>
@@ -25,57 +40,55 @@
 	<br><br>
 	<b>NOTE : Mind the typo, reST LeaVE On uS</b><br><br>
 	<ol>
-	<li><b style="font-style: italic;">COUNT FIELD</b>: Enter keywords with delimiter as <b><i>','</i></b>:
-	<br>
-	Example: <b>sEVEriTY:1 - MiNoR , TiCKeT_TyPE:iSsuE , reQueSter_SenIORIty:1 - jUNIoR......<br>
+	<li><b style="font-style: italic;">COUNT FIELD</b> : Enter keywords with delimiter as <b><i>','</i></b> :
+	<br><br>
+	Example: <b>sEVEriTY : 1 - MinoR , TiCKeT_TyPE : iSsuE , reQueSter_SenIORIty : 1 - juNIoR , ......<br><br>
 	</b><ul>
-	<li>severity<b> : </b>(intcode)(space)(-)(space)(Type)
-	<li>filed_against<b> : </b>(Type)
-	<li>priority<b> : </b>(intcode)(space)(-)(space)(Type)</li>
-	<li>requester_seniority<b> : </b>(intcode)(space)(-)(space)(Type)</li>
-	<li>satisfaction<b> : </b>(intcode)(space)(-)(space)(Type)</li>
-	<li>ticket_type<b> : </b>(Type)</li>
+	<li>Severity<b> : </b>(intcode)(space)(-)(space)(Type)
+	<li>Filed_Against<b> : </b>(Type)
+	<li>Priority<b> : </b>(intcode)(space)(-)(space)(Type)</li>
+	<li>Requester_Seniority<b> : </b>(intcode)(space)(-)(space)(Type)</li>
+	<li>Satisfaction<b> : </b>(intcode)(space)(-)(space)(Type)</li>
+	<li>Ticket_Type<b> : </b>(Type)</li>
 	</ul>
 	<br>
-	<input type="text" name="query" placeholder="query for Count" style="width: 350px;height: 30px;font-size: 17px" autofocus>
+	<input type="text" name="query" placeholder="query for Count" onfocus="this.value=''" style="width: 400px;height: 30px;font-size: 17px" autofocus>
 	<br><br>
 
-	<li><b style="font-style: italic;">REQUEST_ID or IT_OWNER_ID FIELD</b>: Enter id and property to compare:<br>
-	Example: <b>iT_oWneR_id : 22 , SeVEritY</b><br>
+	<li><b style="font-style: italic;">REQUEST_ID or IT_OWNER_ID FIELD</b> : Enter id and property to compare:<br><br>
+	Example: <b>iT_oWneR_id : 22 , SeVEritY</b><br><br>
 	<ul>
-		<li>request_id<b> : </b>(intcode)</li>
-		<li>it_owner_id<b> : </b>(intcode)</li>
+		<li>Request_ID<b> : </b>(intcode)</li>
+		<li>IT_owner_ID<b> : </b>(intcode)</li>
 	</ul><br>
 	<b>Properties:</b><br>
 	<ul>
 		<li>Severity</li>
-		<li>RequesterID</li>
 		<li>DaysOpen</li>
 		<li>FiledAgainst</li>
-		<li>IT_OWNER_ID</li>
 		<li>Priority</li>
 		<li>RequesterSeniority</li>
 		<li>Satisfaction</li>
 		<li>TicketType</li>
 	</ul>
-	<input type="text" name="rqidquery" placeholder="query related to REQUEST_ID/IT_OWNER_ID" style="width: 350px;height: 30px;font-size: 17px">
+	<br>
+	<input type="text" name="rqidquery" placeholder="query related to REQUEST_ID/IT_OWNER_ID" onfocus="this.value=''" style="width: 400px;height: 30px;font-size: 17px">
 	<br><br>
 
-<li><b style="font-style: italic;">PROPERTY FIELD</b>: Enter a property to visualize it
-<br>
-Example : <b>sEvERiTy</b><br>
+<li><b style="font-style: italic;">PROPERTY FIELD</b> : Enter a property to visualize it
+<br><br>
+Example : <b>sEvERiTy</b><br><br>
 <ul>
-	<li>severity
-	<li>request_id
-	<li>days_open
-	<li>filed_against
-	<li>it_owner_id
-	<li>priority
-	<li>requester_seniority
-	<li>satisfaction
-	<li>ticket_type
+	<li>Severity
+	<li>DaYs_oPen
+	<li>Filed_aGainst
+	<li>Priority
+	<li>reQuesTer_seNiority
+	<li>satiSfaction
+	<li>tickEt_typE
 </ul>
-<input type="text" name="propquery" placeholder="query related to PROPERTY" style="width: 350px;height: 30px;font-size: 17px">
+<br>
+<input type="text" name="propquery" placeholder="query related to PROPERTY" list="words" onfocus="this.value=''" style="width: 400px;height: 30px;font-size: 17px">
 <br><br>
 	<input type="submit" name="submit" value="SUBMIT" style="cursor: pointer;">
 </form>
