@@ -165,6 +165,7 @@ def results():
 def analysis():
 	passw=request.form['password']
 	gr=Graph(password=passw)
+	s=0
 	keys=[]
 	vals=[]
 	valuessing=[]
@@ -228,6 +229,7 @@ def analysis():
 		for i in range(0,l,2):
 			labelsrqid.append(tempvalues[i])
 			valuesrqid.append(tempvalues[i+1])
+		s=sum(valuesrqid)
 	#print(labelsrqid)
 	#print(valuesrqid)
 	if not txtprop=="":
@@ -251,7 +253,7 @@ def analysis():
 		propsstr="NA"
 		valtochart="NA"
 
-	return render_template('analysispage.html',valtochart=valtochart,propsstr=propsstr,valuesrqid=valuesrqid,labelsrqid=labelsrqid,rqid=rqid,idval=idval,prop=prop,labelsprop=labelsprop,valuesprop=valuesprop,txtprop=txtprop)
+	return render_template('analysispage.html',valtochart=valtochart,propsstr=propsstr,valuesrqid=valuesrqid,sumofval=s,labelsrqid=labelsrqid,rqid=rqid,idval=idval,prop=prop,labelsprop=labelsprop,valuesprop=valuesprop,txtprop=txtprop)
 
 
 if __name__=='__main__':
