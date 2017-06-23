@@ -9,9 +9,9 @@ You are right here on Analysis
 <br>
 {%if valtochart!="NA"%}
 <center>
-<b style="font-size: 20px;">No. of tickets with {{propsstr}} are : </b><i>{{valtochart}}</i></center>
-<br><br>
+<b style="font-size: 20px;">No. of tickets with {{propsstr}} are : <i>{{valtochart}}</i></b></center>
 {%endif%}
+<br>
 <center>
 <table>
 <tr>
@@ -26,6 +26,11 @@ You are right here on Analysis
 </td>
 {%endif%}
 </tr>
+{%if valuesrqid|length!=0%}
+<tr>
+  <td><b style="font-size: 20px">Total tickets by {{rqid}} : {{idval}} are  <i>{{sumofval}}</i></b></td>
+</tr>
+{%endif%}
 </table>
 </center>
 <script>

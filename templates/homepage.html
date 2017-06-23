@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="{{url_for('static', filename='Wipro.png')}}" type="image/png">
    <title>Tool - Home</title>
 </head>
-<body>
-
+<body background="{{url_for('static', filename='Wipro.png')}}" style="background-size: 200px">
+<marquee style="font-style: italic;color: #f00"><b>Welcome to WIPRO - TicketAnalysisTool</b></marquee>
+<br>
 {% with messages = get_flashed_messages() %}
          {% if messages %}
+         <fieldset style="background-color: #fff;">
             <ul>
+            <li><b>Attention !!</b></li>
                {% for message in messages %}
                <li>{{ message }}</li>
                {% endfor %}
             </ul>
+            </fieldset>
          {% endif %}
       {% endwith %}
-
-<fieldset>
-<legend>Upload your files..</legend>
+      
+<fieldset style="background-color: #fff;margin-top: 100px">
+<legend><b>Upload your files..</b></legend>
    <form action="http://127.0.0.1:5000/results/" method="post" enctype="multipart/form-data">
    <dl>
    <dt>Choose your file</dt>
-   <dd><input type="file" name="file" align="center"></dd><br>
+   <dd><input type="file" name="file" align="center" style="cursor: pointer"></dd><br>
    <dt>DB password</dt>
    <dd><input type="password" name="pass" placeholder="Password" required></dd><br><br>
    </dl>
-   <input type="submit" name="sbutton" value="UPLOAD" align="center">
+   <input type="submit" name="sbutton" value="UPLOAD" align="center" style="cursor: pointer;height: 30px">
    </form>
 
 <br><br>
