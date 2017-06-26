@@ -4,8 +4,8 @@
 <link rel="shortcut icon" href="{{url_for('static', filename='Wipro.png')}}" type="image/png">
    <title>Tool - Home</title>
 </head>
-<body background="{{url_for('static', filename='Wipro.png')}}" style="background-size: 200px">
-<marquee style="font-style: italic;color: #f00"><b>Welcome to WIPRO - TicketAnalysisTool</b></marquee>
+<body>
+<marquee style="font-style: italic;color: #f00;font-size: 25px"><b>Welcome to WIPRO - TicketAnalysisTool</b></marquee>
 <br>
 {% with messages = get_flashed_messages() %}
          {% if messages %}
@@ -19,8 +19,8 @@
             </fieldset>
          {% endif %}
       {% endwith %}
-      
-<fieldset style="background-color: #fff;margin-top: 100px">
+      <br><br>
+<fieldset style="background-color: #fff;">
 <legend><b>Upload your files..</b></legend>
    <form action="http://127.0.0.1:5000/results/" method="post" enctype="multipart/form-data">
    <dl>
@@ -36,6 +36,7 @@
 <b style="font-size: 20px;font-style: italic;">Data already uploaded ? <a href="{{url_for('alreadyuploaded')}}">Your query here</a></b> 
 
 </fieldset>
-
+<br><br>
+<center><i>Developed by : Rakshit Kapoor<br>kapoor_rakshit@yahoo.co.in</i></center>
 </body>
 </html>
