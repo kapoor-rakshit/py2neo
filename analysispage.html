@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tool - Analysis</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+</head>
+<body>
+You are right here on Analysis
+<br>
+{%if valtochart!="NA"%}
+<center>
+<b style="font-size: 20px;">No. of tickets with {{propsstr}} are : <i>{{valtochart}}</i></b></center>
+{%endif%}
+<br>
+<center>
+<table>
+<tr>
+<td>
+{%if valuesrqid|length!=0 and finallist|length==0%}
+  <fieldset><canvas id="pie" width="500" height="500"></canvas></fieldset>
+{%endif%}
+{%if finallist|length!=0%}
+<table>
+<th><b>{{prop}}</b></th> <th style="padding-left: 20pt"><b>No. of tickets</b></th>
+  {%for i in finallist%}
+    <tr><td>{{i[0]}}</td> <td style="padding-left: 40pt"><i>{{i[1]}}</i></td></tr>
+  {%endfor%}
+  </table>
+{%endif%}
+</td>
+{%if valuesprop|length!=0%}
+<td>
+<fieldset><canvas id="bar" width="750" height="500"></canvas></fieldset>
+</td>
+{%endif%}
+</tr>
+{%if valuesrqid|length!=0%}
+<tr><td></td></tr>
+<tr><td></td></tr>
+<tr>
+  <td style="text-align: center;"><b style="font-size: 20px;">Total tickets by {{rqid}} : {{idval}} are  <i>{{sumofval}}</i></b></td>
+</tr>
+{%endif%}
+</table>
+</center>
+<script>
+ Chart.defaults.global.responsive = true;
+if({{valuesrqid|length}}!=0 && {{finallist|length}}==0){
+  var ctx = document.getElementById("pie").getContext('2d');
+
+ var myChart = new Chart(ctx, {
+  type: 'pie',                               // 'pie' and 'doughnut' are same except the cutoutPercentage by default is 0 and 50 respectively
+  data: {
+    labels: [{%for i in labelsrqid%}
+    "{{i}}",
+             {%endfor%}],
+    datasets: [{
+      backgroundColor: [
+       "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA","#ABCDEF", "#AADDDD", "#ABCABC" , "#FAFAAA","#A7450A", "#16BFBD", "#FDA45C", "#FEFFBA","#FBCDFF", "#AADFED", "#FBFFBC" , "#A1F1AF","#AFAFAF","#DADAFA"
+      ],
+      data: [{%for i in valuesrqid%}
+      "{{i}}",
+              {%endfor%}]
+    }]
+  },
+  options:{ 
+  title:{
+    display:true,
+    text:"Classification of {{rqid|upper}} : {{idval}} 's {{prop|title}}",
+    fontSize:18,
+    fontStyle:"italic"
+  },                           // The percentage of the chart that is cut out of the middle.
+    animation:{
+      animateRotate:true,                           // If true, the chart will animate in with a rotation animation.
+      animateScale:false                           // If true, will animate scaling the chart from the center outwards.
+    },
+    rotation:-0.5*Math.PI                           // Starting angle to draw arcs from.
+  }
+}); 
+}
+ if({{valuesprop|length}}!=0){
+ var ctx1 = document.getElementById("bar").getContext('2d');
+
+ var myChart = new Chart(ctx1, {
+  type: 'bar',                               // 'pie' and 'doughnut' are same except the cutoutPercentage by default is 0 and 50 respectively
+  data: {
+    labels: [{%for i in labelsprop%}
+    "{{i}}",
+             {%endfor%}],
+    datasets: [{
+      label:"{{txtprop}}",
+      backgroundColor: [
+       "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA","#ABCDEF", "#AADDDD", "#ABCABC" , "#FAFAAA","#A7450A", "#16BFBD", "#FDA45C", "#FEFFBA","#FBCDFF", "#AADFED", "#FBFFBC" , "#A1F1AF","#AFAFAF","#DADAFA"
+      ],
+      data: [{%for i in valuesprop%}
+      "{{i}}",
+              {%endfor%}]
+    }]
+  },
+  options:{
+     title:{
+    display:true,
+    text:"Classification of {{txtprop|title}}",
+    fontSize:18,
+    fontStyle:"italic"
+  }, 
+    scales: {
+        yAxes: [{ 
+          scaleLabel: {
+            display: true,
+            labelString: "Value",
+            fontSize:15,
+            fontStyle:"bold"
+          },
+         ticks:{
+            beginAtZero:true
+          }
+        }],
+        xAxes: [{ 
+          scaleLabel: {
+            display: true,
+            labelString: "{{txtprop|title}}",
+            fontSize:15,
+            fontStyle:"bold"
+          }
+        }]
+      }
+  }
+});
+}
+</script>
+
+</body>
+</html>
