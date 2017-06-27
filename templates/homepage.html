@@ -25,7 +25,7 @@
    <form action="http://127.0.0.1:5000/results/" method="post" enctype="multipart/form-data">
    <dl>
    <dt>DB password</dt>
-   <dd><input type="password" name="pass" placeholder="Password" required></dd><br>
+   <dd><input type="password" name="pass" placeholder="Password" autocomplete="off" required></dd><br>
    <dt>Choose your file</dt>
    <dd><input type="file" name="file" align="center" style="cursor: pointer"></dd><br>
    </dl>
@@ -34,7 +34,7 @@
 <br><br><br><br>
 
 <form action="http://127.0.0.1:5000/alreadyuploaded/" method="post">
-<input type="password" name="password" placeholder="DB Password" required><br><br>
+<input type="password" name="password" placeholder="DB Password" autocomplete="off" required><br><br>
 <b style="font-size: 20px;font-style: italic;color: #00f">Data already uploaded ?</b>&nbsp &nbsp
 <input type="submit" name="ssbutton" value="Your Query Here" style="cursor: pointer;height: 30px"> 
 </form>

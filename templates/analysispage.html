@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Tool - Analysis</title>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+  <title>Tool - Analysis</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 <body>
 You are right here on Analysis
@@ -47,7 +47,6 @@ You are right here on Analysis
  Chart.defaults.global.responsive = true;
 if({{valuesrqid|length}}!=0 && {{finallist|length}}==0){
   var ctx = document.getElementById("pie").getContext('2d');
-
  var myChart = new Chart(ctx, {
   type: 'pie',                               // 'pie' and 'doughnut' are same except the cutoutPercentage by default is 0 and 50 respectively
   data: {
@@ -80,7 +79,6 @@ if({{valuesrqid|length}}!=0 && {{finallist|length}}==0){
 }
  if({{valuesprop|length}}!=0){
  var ctx1 = document.getElementById("bar").getContext('2d');
-
  var myChart = new Chart(ctx1, {
   type: 'bar',                               // 'pie' and 'doughnut' are same except the cutoutPercentage by default is 0 and 50 respectively
   data: {

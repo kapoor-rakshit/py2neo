@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Error page</title>
+</head>
+<body>
+{% with messages = get_flashed_messages() %}
+         {% if messages %}
+            <ul>
+               {% for message in messages %}
+               <li style="color: #000;font-size: 18px">{{ message }}</li>
+               {% endfor %}
+            </ul>
+         {% endif %}
+      {% endwith %}
+      <br><br>
+      
+<center>
+	<img src="{{url_for('static', filename='missing.jpg')}}" style="height: 300px;width: 200px">
+</center>
+</body>
+</html>
