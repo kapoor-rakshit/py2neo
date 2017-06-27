@@ -23,9 +23,11 @@ def allowed_files(filename):
 def home():
     return render_template('homepage.html')
 
-@app.route('/alreadyuploaded')
+@app.route('/alreadyuploaded/',methods=['post'])
 def alreadyuploaded():
-	return render_template('resultspage.html',contenttype=".csv",tm=0,passval="")
+	passw=request.form["password"]
+
+	return render_template('resultspage.html',contenttype=".csv",tm=0,passval=passw)
 
 @app.route('/results/',methods=['post'])
 def results():
