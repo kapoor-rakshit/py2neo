@@ -15,26 +15,37 @@ You are right here on Analysis
 <center>
 <table>
 <tr>
-{% if valuesrqid|length!=0 %}
 <td>
+{%if valuesrqid|length!=0 and finallist|length==0%}
   <fieldset><canvas id="pie" width="500" height="500"></canvas></fieldset>
-</td>
 {%endif%}
-{% if valuesprop|length!=0 %}
+{%if finallist|length!=0%}
+<table>
+<th><b>{{prop}}</b></th> <th style="padding-left: 20pt"><b>No. of tickets</b></th>
+  {%for i in finallist%}
+    <tr><td>{{i[0]}}</td> <td style="padding-left: 40pt"><i>{{i[1]}}</i></td></tr>
+  {%endfor%}
+  </table>
+{%endif%}
+</td>
+{%if valuesprop|length!=0%}
 <td>
-<fieldset><canvas id="bar" width="600" height="500"></canvas></fieldset>
+<fieldset><canvas id="bar" width="750" height="500"></canvas></fieldset>
 </td>
 {%endif%}
 </tr>
 {%if valuesrqid|length!=0%}
+<tr><td></td></tr>
+<tr><td></td></tr>
 <tr>
-  <td><b style="font-size: 20px">Total tickets by {{rqid}} : {{idval}} are  <i>{{sumofval}}</i></b></td>
+  <td style="text-align: center;"><b style="font-size: 20px;">Total tickets by {{rqid}} : {{idval}} are  <i>{{sumofval}}</i></b></td>
 </tr>
 {%endif%}
 </table>
 </center>
 <script>
-if({{valuesrqid|length}}!=0){
+ Chart.defaults.global.responsive = true;
+if({{valuesrqid|length}}!=0 && {{finallist|length}}==0){
   var ctx = document.getElementById("pie").getContext('2d');
 
  var myChart = new Chart(ctx, {
@@ -45,7 +56,7 @@ if({{valuesrqid|length}}!=0){
              {%endfor%}],
     datasets: [{
       backgroundColor: [
-       "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA","#ABCDEF", "#AADDDD", "#ABCABC" , "#FAFAAA"
+       "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA","#ABCDEF", "#AADDDD", "#ABCABC" , "#FAFAAA","#A7450A", "#16BFBD", "#FDA45C", "#FEFFBA","#FBCDFF", "#AADFED", "#FBFFBC" , "#A1F1AF","#AFAFAF","#DADAFA"
       ],
       data: [{%for i in valuesrqid%}
       "{{i}}",
@@ -79,7 +90,7 @@ if({{valuesrqid|length}}!=0){
     datasets: [{
       label:"{{txtprop}}",
       backgroundColor: [
-       "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA","#ABCDEF", "#AADDDD", "#ABCABC" , "#FAFAAA"
+       "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA","#ABCDEF", "#AADDDD", "#ABCABC" , "#FAFAAA","#A7450A", "#16BFBD", "#FDA45C", "#FEFFBA","#FBCDFF", "#AADFED", "#FBFFBC" , "#A1F1AF","#AFAFAF","#DADAFA"
       ],
       data: [{%for i in valuesprop%}
       "{{i}}",
