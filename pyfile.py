@@ -174,6 +174,9 @@ def analysis():
 	tempvalues=[]
 	valuesprop=[]
 	labelsprop=[]
+	valitownersrequesters=[]
+	labelitownersrequesters=[]
+	finallist=[]
 	rqid=""
 	idval=""
 	prop=""
@@ -219,7 +222,12 @@ def analysis():
 			prop="RequesterSeniority"
 		if prop=="Filedagainst":
 			prop="FiledAgainst"
+		if prop=="Requesterid":
+			prop="RequesterID"
 		rqidq=gr.run("match (a:tempdata{"+rqid+":"+idval+"})--(n:"+prop+") return n."+prop+",count(n)").data()
+		if prop=="Itownerid":
+			rqid="RequesterID"
+			rqidq=gr.run("match (a:tempdata{"+"request_id:"+idval+"})--(n:IT_OWNER_ID) return n.ITOWNERID,count(n)").data()
 		
 		for i in rqidq:
 			for j,k in i.items():
@@ -229,6 +237,10 @@ def analysis():
 		for i in range(0,l,2):
 			labelsrqid.append(tempvalues[i])
 			valuesrqid.append(tempvalues[i+1])
+		if prop=="RequesterID" or prop=="Itownerid":
+			valitownersrequesters=valuesrqid
+			labelitownersrequesters=labelsrqid
+			finallist=list(zip(labelitownersrequesters,valitownersrequesters))
 		s=sum(valuesrqid)
 	#print(labelsrqid)
 	#print(valuesrqid)
@@ -253,7 +265,7 @@ def analysis():
 		propsstr="NA"
 		valtochart="NA"
 
-	return render_template('analysispage.html',valtochart=valtochart,propsstr=propsstr,valuesrqid=valuesrqid,sumofval=s,labelsrqid=labelsrqid,rqid=rqid,idval=idval,prop=prop,labelsprop=labelsprop,valuesprop=valuesprop,txtprop=txtprop)
+	return render_template('analysispage.html',valtochart=valtochart,propsstr=propsstr,valuesrqid=valuesrqid,sumofval=s,labelsrqid=labelsrqid,finallist=finallist,rqid=rqid,idval=idval,prop=prop,labelsprop=labelsprop,valuesprop=valuesprop,txtprop=txtprop)
 
 
 if __name__=='__main__':
