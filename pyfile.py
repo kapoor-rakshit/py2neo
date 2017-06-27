@@ -9,7 +9,7 @@ from py2neo import *
 import time
 
 ALLOWED_EXTENSIONS = set(['csv'])
-UPLOAD_FOLDER="C:/Users/R6000670/Documents/Neo4j/Ticketanalysisdb/import/"
+UPLOAD_FOLDER="C:/Users/ANIL KAPOOR/Documents/Neo4j/Ticketanalysisdb/import/"
 
 app=Flask(__name__)
 app.secret_key = 'random string'
@@ -26,8 +26,15 @@ def home():
 @app.route('/alreadyuploaded/',methods=['post'])
 def alreadyuploaded():
 	passw=request.form["password"]
-
-	return render_template('resultspage.html',contenttype=".csv",tm=0,passval=passw)
+	gr=Graph(password=passw)
+	tx=gr.begin()
+	a=Node("suggestions",query="Dummy")
+	tx.merge(a)
+	tx.commit()
+	queries=gr.run("match (a:suggestions) return a.query").data()
+	#print(queries)
+	suggestions=[i["a.query"] for i in queries] 
+	return render_template('resultspage.html',contenttype=".csv",tm=0,passval=passw,suggestions=suggestions)
 
 @app.route('/results/',methods=['post'])
 def results():
@@ -57,7 +64,7 @@ def results():
 		itolist=set()
 		dolist=set()
 
-		with open('C:\\Users\\R6000670\\Documents\\Neo4j\\Ticketanalysisdb\\import\\'+securedfile) as csvfile:
+		with open('C:\\Users\\ANIL KAPOOR\\Documents\\Neo4j\\Ticketanalysisdb\\import\\'+securedfile) as csvfile:
 			reader = csv.DictReader(csvfile)
 			for row in reader:
 				tt=row['Ticket_Type']
@@ -161,7 +168,15 @@ def results():
 		for i in itolist:
 			gr.run("MATCH (a:tempdata),(b:IT_OWNER_ID) WHERE a.it_owner_id = " + str(i) + " AND b.ITOWNERID ="+ str(i)+ " MERGE (a)-[r:ITOWNERID]->(b)")
 
-		return render_template('resultspage.html',contenttype=ctype,tm=time.time()-st,passval=passw)
+		tx=gr.begin()
+		a=Node("suggestions",query="Dummy")
+		tx.merge(a)
+		tx.commit()
+		queries=gr.run("match (a:suggestions) return a.query").data()
+		#print(queries)
+		suggestions=[i["a.query"] for i in queries]
+
+		return render_template('resultspage.html',contenttype=ctype,tm=time.time()-st,passval=passw,suggestions=suggestions)
 
 @app.route('/analysis/',methods=['post'])
 def analysis():
@@ -188,6 +203,13 @@ def analysis():
 	txt=request.form["query"].strip()
 	txtrqid=request.form["rqidquery"].strip()
 	txtprop=request.form["propquery"].strip()
+	suggest=request.form["genquery"].strip()
+
+	tx=gr.begin()
+	a=Node("suggestions",query=suggest)
+	tx.merge(a)
+	tx.commit()
+
 	if not txt=="":
 		properties=list(txt.split(','))
 		for i in properties:
@@ -262,7 +284,7 @@ def analysis():
 	if((len(labelsrqid)==0 and txtrqid!="") or (valtochart==0 and txt!="") or (len(labelsprop)!=0 and labelsprop[0]==None and txtprop!="")):
 		flash("Your one or more query didn't match database records !!")
 		flash("Try Again !!")
-		return redirect(url_for("alreadyuploaded"))
+		return render_template("missing.html")
 	if txt=="":
 		propsstr="NA"
 		valtochart="NA"
