@@ -2,6 +2,77 @@
 <html>
 <head>
 	<title>Tool - Results</title>
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    var availableTags = [
+      "number",
+      "TicketType",
+      "RequesterSeniority",
+      "Severity",
+      "FiledAgainst",
+      "Priority",
+      "Satisfaction",
+      "DaysOpen",
+      "RequesterID",
+      "IT_OWNER_ID",
+      "Unclassified",
+      "Minor",
+      "Normal",
+      "Major",
+      "Critical",
+      "Issue",
+      "Request",
+      "Junior",
+      "Regular",
+      "Senior",
+      "Management",
+      "Systems","Software","Access/Login","Hardware","Low","Medium","High","Unsatisfied","Satisfied","HighlySatisfied"
+    ];
+    function split( val ) {
+      return val.split(/ \s*/);                           //ATTENTION : mind the (space) or your desired delimiter (,:;) after first / 
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+ 
+    $( "#words" )
+      // don't navigate away from the field on tab when selecting an item
+      .on( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        minLength: 1,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            availableTags, extractLast( request.term )) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the space at the end
+          terms.push( "" );
+          this.value = terms.join(" ");                    //Add your desired delimiter (here (space))
+          return false;
+        }
+      });
+  } );
+  </script>
 </head>
 <body>
 
@@ -21,9 +92,12 @@
 <fieldset>
 	<form action="http://127.0.0.1:5000/analysis/" method="post" target="_blank">
 	Enter password:<br>
-	<input type="password" name="password" placeholder="DB password" value="{{passval}}" required autofocus>
+	<input type="password" name="password" placeholder="DB password" value="{{passval}}" required>
 	<br><br>
-	<b>NOTE : Mind the typo, reST LeaVE On uS</b><br><br>
+	<b>NOTE : Mind the typo, reST LeaVE On uS</b><br>
+	<center><b>Enter Anything Here !! Seriously yours</b><br><br>
+	<input type="text" name="genquery" id="words" placeholder="Your Query" style="width: 600px;height: 30px;font-size: 17px;text-align: center;" autofocus>
+	</center><br><br>
 	<ol>
 	<li><b style="font-style: italic;">COUNT FIELD</b> : Enter keywords with delimiter as <b><i>','</i></b> :
 	<br><br>
@@ -37,7 +111,7 @@
 	<li>Ticket_Type<b> : </b>(Type)</li>
 	</ul>
 	<br>
-	<input type="text" name="query" placeholder="query for Count" style="width: 400px;height: 30px;font-size: 17px" autofocus>
+	<input type="text" name="query" placeholder="query for COUNT" style="width: 400px;height: 30px;font-size: 17px">
 	<br><br>
 
 	<li><b style="font-style: italic;">REQUEST_ID or IT_OWNER_ID FIELD</b> : Enter id and property to compare:<br><br>

@@ -24,16 +24,20 @@
 <legend><b>Upload your files..</b></legend>
    <form action="http://127.0.0.1:5000/results/" method="post" enctype="multipart/form-data">
    <dl>
+   <dt>DB password</dt>
+   <dd><input type="password" name="pass" placeholder="Password" required></dd><br>
    <dt>Choose your file</dt>
    <dd><input type="file" name="file" align="center" style="cursor: pointer"></dd><br>
-   <dt>DB password</dt>
-   <dd><input type="password" name="pass" placeholder="Password" required></dd><br><br>
    </dl>
    <input type="submit" name="sbutton" value="UPLOAD" align="center" style="cursor: pointer;height: 30px">
    </form>
+<br><br><br><br>
 
-<br><br>
-<b style="font-size: 20px;font-style: italic;">Data already uploaded ? <a href="{{url_for('alreadyuploaded')}}">Your query here</a></b> 
+<form action="http://127.0.0.1:5000/alreadyuploaded/" method="post">
+<input type="password" name="password" placeholder="DB Password" required><br><br>
+<b style="font-size: 20px;font-style: italic;color: #00f">Data already uploaded ?</b>&nbsp &nbsp
+<input type="submit" name="ssbutton" value="Your Query Here" style="cursor: pointer;height: 30px"> 
+</form>
 
 </fieldset>
 <br><br>
