@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Tool - Results</title>
+  <title>Tool - Results</title>
 
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -33,10 +33,9 @@
       "Management",
       "Systems","Software","Access/Login","Hardware","Low","Medium","High","Unsatisfied","Satisfied","HighlySatisfied"
     ];
-    	{%for i in suggestions%}
+      {%for i in suggestions%}
 availableTags.push("{{i}}")
 {%endfor%}
-
     function split( val ) {
       return val.split(/ \s*/);                           //ATTENTION : mind the (space) or your desired delimiter (,:;) after first / 
     }
@@ -47,7 +46,6 @@ availableTags.push("{{i}}")
     $( "#words" )
       // don't navigate away from the field on tab when selecting an item
       .on( "keydown", function( event ) {
-
         if ( event.keyCode === $.ui.keyCode.TAB &&
             $( this ).autocomplete( "instance" ).menu.active ) {
           event.preventDefault();
@@ -95,68 +93,71 @@ availableTags.push("{{i}}")
 <b>Voila !! File Uploaded Successfully !!</b>
 <br><br>
 <fieldset>
-	<form action="http://127.0.0.1:5000/analysis/" method="post" target="_blank">
-	Enter password:<br>
-	<input type="password" name="password" placeholder="DB password" value="{{passval}}" required>
-	<br><br>
-	<b>NOTE : Mind the typo, reST LeaVE On uS</b><br>
-	<center><b>Enter Anything Here !! Seriously yours</b><br><br>
-	<input type="text" name="genquery" id="words" placeholder="Your Query" style="width: 600px;height: 30px;font-size: 17px;text-align: center;" autofocus>
-	</center><br><br>
-	<ol>
-	<li><b style="font-style: italic;">COUNT FIELD</b> : Enter keywords with delimiter as <b><i>','</i></b> :
-	<br><br>
-	Example: <b>sEVEriTY : 1 - MinoR , TiCKeT_TyPE : iSsuE , reQueSter_SenIORIty : 1 - juNIoR , ......<br><br>
-	</b><ul>
-	<li>Severity<b> : </b>(intcode)(space)(-)(space)(Type)
-	<li>Filed_Against<b> : </b>(Type)
-	<li>Priority<b> : </b>(intcode)(space)(-)(space)(Type)</li>
-	<li>Requester_Seniority<b> : </b>(intcode)(space)(-)(space)(Type)</li>
-	<li>Satisfaction<b> : </b>(intcode)(space)(-)(space)(Type)</li>
-	<li>Ticket_Type<b> : </b>(Type)</li>
-	</ul>
-	<br>
-	<input type="text" name="query" placeholder="query for COUNT" style="width: 400px;height: 30px;font-size: 17px">
-	<br><br>
+  <form action="http://127.0.0.1:5000/analysis/" method="post" target="_blank">
+  Enter password:<br>
+  <input type="password" name="password" placeholder="DB password" value="{{passval}}" required>
+  <br><br>
+  <b>NOTE : Mind the typo, reST LeaVE On uS</b><br>
+  <center><b>Anything Here !!</b><br><br>
+  <input type="text" name="genquery" id="words" placeholder="Your Query" style="width: 800px;height: 30px;font-size: 17px;text-align: center;" autofocus><br><i>Note: Search is currently in Beta, set your expectations to a minimum!</i>
+  </center><br><br>
+  <ol>
+  <li><b style="font-style: italic;">COUNT FIELD</b> : Enter keywords with delimiter as <b><i>','</i></b> :
+  <br><br>
+  Example: <b>sEVEriTY : 1 - MinoR , TiCKeT_TyPE : iSsuE , reQueSter_SenIORIty : 1 - juNIoR , ......<br><br>
+  </b><ul>
+  <li>Severity<b> : </b>(intcode)(space)(-)(space)(Type)
+  <li>Filed_Against<b> : </b>(Type)
+  <li>Priority<b> : </b>(intcode)(space)(-)(space)(Type)</li>
+  <li>Requester_Seniority<b> : </b>(intcode)(space)(-)(space)(Type)</li>
+  <li>Satisfaction<b> : </b>(intcode)(space)(-)(space)(Type)</li>
+  <li>Ticket_Type<b> : </b>(Type)</li>
+  <li>IT_owner_ID<b> : </b>(intcode)</li>
+  <li>Request_ID<b> : </b>(intcode)</li>
+  <li>Days_Open<b> : </b>(intcode)</li>
+  </ul>
+  <br>
+  <input type="text" name="query" placeholder="query for COUNT" style="width: 400px;height: 30px;font-size: 17px;">
+  <br><br>
 
-	<li><b style="font-style: italic;">REQUEST_ID or IT_OWNER_ID FIELD</b> : Enter id and property to compare:<br><br>
-	Example: <b>iT_oWneR_id : 22 , SeVEritY</b><br><br>
-	<ul>
-		<li>Request_ID<b> : </b>(intcode)</li>
-		<li>IT_owner_ID<b> : </b>(intcode)</li>
-	</ul><br>
-	<b>Properties:</b><br>
-	<ul>
-		<li>Severity</li>
-		<li>DaysOpen</li>
-		<li>FiledAgainst</li>
-		<li>Priority</li>
-		<li>RequesterSeniority</li>
-		<li>Satisfaction</li>
-		<li>TicketType</li>
-		<li>ITownerID</li>
-		<li>RequesterID</li>
-	</ul>
-	<br>
-	<input type="text" name="rqidquery" placeholder="query related to REQUEST_ID/IT_OWNER_ID" style="width: 400px;height: 30px;font-size: 17px">
-	<br><br>
+  <li><b style="font-style: italic;">REQUEST_ID or IT_OWNER_ID FIELD</b> : Enter id and property to compare:<br><br>
+  Example: <b>iT_oWneR_id : 22 , SeVEritY</b><br><br>
+  <ul>
+    <li>Request_ID<b> : </b>(intcode)</li>
+    <li>IT_owner_ID<b> : </b>(intcode)</li>
+  </ul><br>
+  <b>Properties:</b><br>
+  <ul>
+    <li>Severity</li>
+    <li>DaysOpen</li>
+    <li>FiledAgainst</li>
+    <li>Priority</li>
+    <li>RequesterSeniority</li>
+    <li>Satisfaction</li>
+    <li>TicketType</li>
+    <li>ITownerID</li>
+    <li>RequesterID</li>
+  </ul>
+  <br>
+  <input type="text" name="rqidquery" placeholder="query related to REQUEST_ID/IT_OWNER_ID" style="width: 400px;height: 30px;font-size: 17px">
+  <br><br>
 
 <li><b style="font-style: italic;">PROPERTY FIELD</b> : Enter a property to visualize it
 <br><br>
 Example : <b>sEvERiTy</b><br><br>
 <ul>
-	<li>Severity
-	<li>DaYs_oPen
-	<li>Filed_aGainst
-	<li>Priority
-	<li>reQuesTer_seNiority
-	<li>satiSfaction
-	<li>tickEt_typE
+  <li>Severity
+  <li>DaYs_OPen
+  <li>Filed_AGainst
+  <li>Priority
+  <li>ReQuesTer_SeNiority
+  <li>SatiSfaction
+  <li>TickEt_TypE
 </ul>
 <br>
 <input type="text" name="propquery" placeholder="query related to PROPERTY" onfocus="this.value=''" style="width: 400px;height: 30px;font-size: 17px">
 <br><br>
-	<input type="submit" name="submit" value="SUBMIT" style="cursor: pointer;height: 30px;border-width: 2pt">
+  <input type="submit" name="submit" value="SUBMIT" style="cursor: pointer;height: 30px;border-width: 2pt">
 </form>
 </fieldset>
 <br>
