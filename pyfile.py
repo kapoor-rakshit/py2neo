@@ -7,6 +7,8 @@ from werkzeug import secure_filename
 import csv
 from py2neo import *
 import time
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 
 ALLOWED_EXTENSIONS = set(['csv'])
 UPLOAD_FOLDER="C:/Users/ANIL KAPOOR/Documents/Neo4j/Ticketanalysisdb/import/"
@@ -199,16 +201,68 @@ def analysis():
 	prop=""
 	txtprop=""
 	valtochart=""
+	tempstr=""
 	temppropvalues=[]
 	txt=request.form["query"].strip()
 	txtrqid=request.form["rqidquery"].strip()
 	txtprop=request.form["propquery"].strip()
-	suggest=request.form["genquery"].strip()
+	suggest=request.form["genquery"].strip().lower()
 
 	tx=gr.begin()
 	a=Node("suggestions",query=suggest)
 	tx.merge(a)
 	tx.commit()
+
+	wordsofsuggest=word_tokenize(suggest)
+	filteredwordsofsuggest=[]
+	stopwordsineng=set(stopwords.words("english"))
+	for i in wordsofsuggest:
+		if i not in stopwordsineng:
+			filteredwordsofsuggest.append(i)
+
+	#print(filteredwordsofsuggest)
+
+	dictofheadings={"Request":"ticket_type","Issue":"ticket_type","0 - Unclassified":"severity","1 - Minor":"severity","2 - Normal":"severity","3 - Major":"severity","4 - Critical":"severity","1 - Junior":"requester_seniority",
+	"2 - Regular":"requester_seniority","3 - Senior":"requester_seniority","4 - Management":"requester_seniority","Systems":"filed_against","Software":"filed_against","Hardware":"filed_against","Access/Login":"filed_against",
+	"0 - Unassigned":"priority","1 - Low":"priority","2 - Medium":"priority","3 - High":"priority","0 - Unknown":"satisfaction","1 - Unsatisfied":"satisfaction","2 - Satisfied":"satisfaction","3 - Highly satisfied":"satisfaction",
+	"it_owner_id":"22","request_id":"1585","days_open":"22"}
+
+	dictforreplacements={"request":"Request","issue":"Issue","unclassified":"0 - Unclassified","minor":"1 - Minor","normal":"2 - Normal","major":"3 - Major","critical":"4 - Critical","junior":"1 - Junior","regular":"2 - Regular","senior":"3 - Senior",
+	"management":"4 - Management","systems":"Systems","software":"Software","hardware":"Hardware","login":"Access/Login","access":"Access/Login","unassigned":"0 - Unassigned","low":"1 - Low","medium":"2 - Medium","high":"3 - High",
+	"unknown":"0 - Unknown","unsatisfied":"1 - Unsatisfied","satisfied":"2 - Satisfied","highly":"3 - Highly satisfied",
+	"filedagainst":"filed_against","filed":"filed_against","filed_against":"filed_against","tickettype":"ticket_type","ticket_type":"ticket_type","type":"ticket_type","requesterseniority":"requester_seniority","requester_seniority":"requester_seniority","seniority":"requester_seniority","severity":"severity",
+	"daysopen":"days_open","days_open":"days_open","days":"days_open","priority":"priority","satisfaction":"satisfaction","requesterid":"request_id","requestid":"request_id","requester":"request_id",
+	"itownerid":"it_owner_id","itowner":"it_owner_id","it":"it_owner_id"}
+
+	l=len(filteredwordsofsuggest)
+
+	for i in range(0,l,1):
+		if filteredwordsofsuggest[i] in dictforreplacements:
+			filteredwordsofsuggest[i]=dictforreplacements[filteredwordsofsuggest[i]]
+
+		temptxt=""
+
+		for i in range(0,l,1):
+			w=filteredwordsofsuggest[i]
+			if w in dictofheadings and not dictofheadings[w].isdigit():
+				temptxt+=dictofheadings[w]+":"+w+","
+			elif w in dictofheadings and dictofheadings[w].isdigit():
+				j=i
+				while j<l and not filteredwordsofsuggest[j].isdigit():
+					j+=1
+				if j<l:
+					temptxt+=w+":"+filteredwordsofsuggest[j]+","
+
+		ll=len(temptxt)
+		temptxt=temptxt[:ll-1]
+
+		txt=temptxt
+
+	for i in range(0,l,1):
+		#print(filteredwordsofsuggest)
+		if filteredwordsofsuggest[i] in dictforreplacements:
+			txtprop=dictforreplacements[filteredwordsofsuggest[i]]
+			break
 
 	if not txt=="":
 		properties=list(txt.split(','))
@@ -217,11 +271,14 @@ def analysis():
 			keys.append(k.strip().lower())
 			vals.append(v.strip().title())
 		props=dict(zip(keys,vals))
-	#print(props)
+		#print(props)
 		propsstr="{"
 		for i,j in props.items():
 			propsstr+=i+":"
-			propsstr+="'"+j+"',"
+			if not j.isdigit():
+				propsstr+="'"+j+"',"
+			else:
+				propsstr+=j+","
 		l=len(propsstr)
 		propsstr=propsstr[:l-1]
 		propsstr+="}"
@@ -233,6 +290,7 @@ def analysis():
 	#print(valuessing)
 
 	if not txtrqid=="":
+		print(txtrqid)
 		rqid,prop=txtrqid.split(",")
 		rqid,idval=rqid.split(":")
 		rqid=rqid.strip().lower()
@@ -269,6 +327,7 @@ def analysis():
 	#print(labelsrqid)
 	#print(valuesrqid)
 	if not txtprop=="":
+		#print(txtprop)
 		txtprop=txtprop.strip().lower()
 		propq=gr.run("match (a:tempdata) return a."+txtprop+",count(a)").data()
 		for i in propq:
