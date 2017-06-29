@@ -94,9 +94,8 @@ availableTags.push("{{i}}")
 <br><br>
 <fieldset>
   <form action="http://127.0.0.1:5000/analysis/" method="post" target="_blank">
-  Enter password:<br>
-  <input type="password" name="password" placeholder="DB password" value="{{passval}}" required>
-  <br><br>
+  <input type="hidden" name="password" placeholder="DB password" value="{{passval}}" required>
+  <br>
   <b>NOTE : Mind the typo, reST LeaVE On uS</b><br>
   <center><b>Anything Here !!</b><br><br>
   <input type="text" name="genquery" id="words" placeholder="Your Query" style="width: 800px;height: 30px;font-size: 17px;text-align: center;" autofocus><br><i>Note: Search is currently in Beta, set your expectations to a minimum!</i>
