@@ -230,9 +230,11 @@ def analysis():
 	dictforreplacements={"request":"Request","issue":"Issue","unclassified":"0 - Unclassified","minor":"1 - Minor","normal":"2 - Normal","major":"3 - Major","critical":"4 - Critical","junior":"1 - Junior","regular":"2 - Regular","senior":"3 - Senior",
 	"management":"4 - Management","systems":"Systems","software":"Software","hardware":"Hardware","login":"Access/Login","access":"Access/Login","unassigned":"0 - Unassigned","low":"1 - Low","medium":"2 - Medium","high":"3 - High",
 	"unknown":"0 - Unknown","unsatisfied":"1 - Unsatisfied","satisfied":"2 - Satisfied","highly":"3 - Highly satisfied",
-	"filedagainst":"filed_against","filed":"filed_against","filed_against":"filed_against","tickettype":"ticket_type","ticket_type":"ticket_type","type":"ticket_type","requesterseniority":"requester_seniority","requester_seniority":"requester_seniority","seniority":"requester_seniority","severity":"severity",
+	"filedagainst":"filed_against","filed":"filed_against","filed_against":"filed_against","tickettype":"ticket_type","ticket_type":"ticket_type","requesterseniority":"requester_seniority","requester_seniority":"requester_seniority","seniority":"requester_seniority","severity":"severity",
 	"daysopen":"days_open","days_open":"days_open","days":"days_open","priority":"priority","satisfaction":"satisfaction","requesterid":"request_id","requestid":"request_id","requester":"request_id",
-	"itownerid":"it_owner_id","itowner":"it_owner_id","it":"it_owner_id"}
+	"itownerid":"it_owner_id","itowner":"it_owner_id","owner":"it_owner_id"}
+
+	dictforitrequester={"severity":"severity","ticket_type":"tickettype","requester_seniority":"requesterseniority","filed_against":"filedagainst","priority":"priority","satisfaction":"satisfaction","days_open":"daysopen"}
 
 	l=len(filteredwordsofsuggest)
 
@@ -240,23 +242,30 @@ def analysis():
 		if filteredwordsofsuggest[i] in dictforreplacements:
 			filteredwordsofsuggest[i]=dictforreplacements[filteredwordsofsuggest[i]]
 
-		temptxt=""
+	temptxt=""
 
-		for i in range(0,l,1):
-			w=filteredwordsofsuggest[i]
-			if w in dictofheadings and not dictofheadings[w].isdigit():
-				temptxt+=dictofheadings[w]+":"+w+","
-			elif w in dictofheadings and dictofheadings[w].isdigit():
-				j=i
-				while j<l and not filteredwordsofsuggest[j].isdigit():
-					j+=1
-				if j<l:
-					temptxt+=w+":"+filteredwordsofsuggest[j]+","
+	for i in range(0,l,1):
+		w=filteredwordsofsuggest[i]
+		if w in dictofheadings and not dictofheadings[w].isdigit():
+			temptxt+=dictofheadings[w]+":"+w+","
+		elif w in dictofheadings and dictofheadings[w].isdigit():
+			j=i
+			while j<l and not filteredwordsofsuggest[j].isdigit():
+				j+=1
+			if j<l:
+				temptxt+=w+":"+filteredwordsofsuggest[j]+","
 
-		ll=len(temptxt)
-		temptxt=temptxt[:ll-1]
+	ll=len(temptxt)
+	temptxt=temptxt[:ll-1]
 
-		txt=temptxt
+	txt=temptxt
+	print(temptxt)
+	tplist=list(temptxt.split(":"))
+	if len(tplist)==2:
+		for i in filteredwordsofsuggest:
+			if i in dictforitrequester:
+				txtrqid=temptxt+","+dictforitrequester[i]
+				break
 
 	for i in range(0,l,1):
 		#print(filteredwordsofsuggest)
@@ -342,7 +351,7 @@ def analysis():
 
 	if((len(labelsrqid)==0 and txtrqid!="") or (valtochart==0 and txt!="") or (len(labelsprop)!=0 and labelsprop[0]==None and txtprop!="")):
 		flash("Your one or more query didn't match database records !!")
-		flash("Try Again !!")
+		flash("Try again using dedicated fields.")
 		return render_template("missing.html")
 	if txt=="":
 		propsstr="NA"
