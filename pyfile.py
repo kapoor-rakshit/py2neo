@@ -203,9 +203,9 @@ def analysis():
 	valtochart=""
 	tempstr=""
 	temppropvalues=[]
-	txt=request.form["query"].strip()
+	txt=request.form["query"].strip().lower()
 	txtrqid=request.form["rqidquery"].strip()
-	txtprop=request.form["propquery"].strip()
+	txtprop=request.form["propquery"].strip().lower()
 	suggest=request.form["genquery"].strip().lower()
 
 	tx=gr.begin()
@@ -228,13 +228,13 @@ def analysis():
 	"it_owner_id":"22","request_id":"1585","days_open":"22"}
 
 	dictforreplacements={"request":"Request","issue":"Issue","unclassified":"0 - Unclassified","minor":"1 - Minor","normal":"2 - Normal","major":"3 - Major","critical":"4 - Critical","junior":"1 - Junior","regular":"2 - Regular","senior":"3 - Senior",
-	"management":"4 - Management","systems":"Systems","software":"Software","hardware":"Hardware","login":"Access/Login","access":"Access/Login","unassigned":"0 - Unassigned","low":"1 - Low","medium":"2 - Medium","high":"3 - High",
-	"unknown":"0 - Unknown","unsatisfied":"1 - Unsatisfied","satisfied":"2 - Satisfied","highly":"3 - Highly satisfied",
-	"filedagainst":"filed_against","filed":"filed_against","filed_against":"filed_against","tickettype":"ticket_type","ticket_type":"ticket_type","requesterseniority":"requester_seniority","requester_seniority":"requester_seniority","seniority":"requester_seniority","severity":"severity",
+	"management":"4 - Management","systems":"Systems","software":"Software","hardware":"Hardware","login":"Access/Login","access":"Access/Login","access/login":"Access/Login","unassigned":"0 - Unassigned","low":"1 - Low","medium":"2 - Medium","high":"3 - High",
+	"unknown":"0 - Unknown","unsatisfied":"1 - Unsatisfied","satisfied":"2 - Satisfied","highlysatisfied":"3 - Highly satisfied",
+	"filedagainst":"filed_against","filed":"filed_against","filed_against":"filed_against","tickettype":"ticket_type","tickettypes":"ticket_type","ticket_type":"ticket_type","requesterseniority":"requester_seniority","requester_seniority":"requester_seniority","seniority":"requester_seniority","severity":"severity",
 	"daysopen":"days_open","days_open":"days_open","days":"days_open","priority":"priority","satisfaction":"satisfaction","requesterid":"request_id","requestid":"request_id","requester":"request_id",
 	"itownerid":"it_owner_id","itowner":"it_owner_id","owner":"it_owner_id"}
 
-	dictforitrequester={"severity":"severity","ticket_type":"tickettype","requester_seniority":"requesterseniority","filed_against":"filedagainst","priority":"priority","satisfaction":"satisfaction","days_open":"daysopen"}
+	dictforitrequester={"severity":"severity","ticket_type":"tickettype","requester_seniority":"requesterseniority","filed_against":"filedagainst","priority":"priority","satisfaction":"satisfaction"}
 
 	l=len(filteredwordsofsuggest)
 
@@ -258,10 +258,12 @@ def analysis():
 	ll=len(temptxt)
 	temptxt=temptxt[:ll-1]
 
-	txt=temptxt
+	if temptxt!="":
+		txt=temptxt
+
 	print(temptxt)
 	tplist=list(temptxt.split(":"))
-	if len(tplist)==2:
+	if len(tplist)==2 and (tplist[0]=="request_id" or tplist[0]=="it_owner_id"):
 		for i in filteredwordsofsuggest:
 			if i in dictforitrequester:
 				txtrqid=temptxt+","+dictforitrequester[i]
@@ -274,11 +276,23 @@ def analysis():
 			break
 
 	if not txt=="":
+		txtwords=word_tokenize(txt)
+		filteredtxtwords=[]
+		for i in txtwords:
+			if i not in stopwordsineng:
+				filteredtxtwords.append(i)
+		ltxt=len(filteredtxtwords)
+		for i in range(0,ltxt,1):
+			if filteredtxtwords[i] in dictforreplacements:
+				filteredtxtwords[i]=dictforreplacements[filteredtxtwords[i]]
+		txt=" ".join(filteredtxtwords)
+		print(txt)
+
 		properties=list(txt.split(','))
 		for i in properties:
 			k,v=i.split(':')
 			keys.append(k.strip().lower())
-			vals.append(v.strip().title())
+			vals.append(v.strip())
 		props=dict(zip(keys,vals))
 		#print(props)
 		propsstr="{"
@@ -337,6 +351,11 @@ def analysis():
 	#print(valuesrqid)
 	if not txtprop=="":
 		#print(txtprop)
+		txtprop=list(txtprop.split())
+		for i in txtprop:
+			if i in dictforreplacements:
+				txtprop=dictforreplacements[i]
+				break
 		txtprop=txtprop.strip().lower()
 		propq=gr.run("match (a:tempdata) return a."+txtprop+",count(a)").data()
 		for i in propq:
