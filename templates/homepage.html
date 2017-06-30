@@ -21,22 +21,22 @@
       {% endwith %}
       <br><br>
 <fieldset style="background-color: #fff;">
-<legend><b>Upload your files..</b></legend>
+<legend><img src="{{url_for('static', filename='Wipro.png')}}" height="100px" width="125px"></legend>
    <form action="http://127.0.0.1:5000/results/" method="post" enctype="multipart/form-data">
    <dl>
    <dt>DB password</dt>
-   <dd><input type="password" name="pass" placeholder="Password" autocomplete="off" required></dd><br>
+   <dd><input type="password" name="pass" placeholder="Password" autocomplete="off" style="text-align: center;" required></dd><br>
    <dt>Choose your file</dt>
-   <dd><input type="file" name="file" align="center" style="cursor: pointer"></dd><br>
+   <dd><input type="file" name="file" align="center" style="cursor: pointer;"></dd><br>
    </dl>
    <input type="submit" name="sbutton" value="UPLOAD" align="center" style="cursor: pointer;height: 30px">
    </form>
 <br><br><br><br>
 
 <form action="http://127.0.0.1:5000/alreadyuploaded/" method="post">
-<input type="password" name="password" placeholder="DB Password" autocomplete="off" required><br><br>
-<b style="font-size: 20px;font-style: italic;color: #00f">Data already uploaded ?</b>&nbsp &nbsp
-<input type="submit" name="ssbutton" value="Your Query Here" style="cursor: pointer;height: 30px"> 
+<input type="password" name="password" placeholder="DB Password" autocomplete="off" style="text-align: center;" required><br><br>
+<b style="font-size: 23px;font-style: italic;color: darkred">Data already uploaded ?</b>&nbsp &nbsp
+<input type="submit" name="ssbutton" value="Your Query Here" style="cursor: pointer;height: 30px;"> 
 </form>
 
 </fieldset>
