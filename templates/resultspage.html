@@ -103,28 +103,28 @@ availableTags.push("{{i}}")
   <ol>
   <li><b style="font-style: italic;">COUNT FIELD</b> : Enter keywords with delimiter as <b><i>','</i></b> :
   <br><br>
-  Example: <b>sEVEriTY : 1 - MinoR , TiCKeT_TyPE : iSsuE , reQueSter_SenIORIty : 1 - juNIoR , ......<br><br>
-  </b><ul>
-  <li>Severity<b> : </b>(intcode)(space)(-)(space)(Type)
-  <li>Filed_Against<b> : </b>(Type)
-  <li>Priority<b> : </b>(intcode)(space)(-)(space)(Type)</li>
-  <li>Requester_Seniority<b> : </b>(intcode)(space)(-)(space)(Type)</li>
-  <li>Satisfaction<b> : </b>(intcode)(space)(-)(space)(Type)</li>
-  <li>Ticket_Type<b> : </b>(Type)</li>
-  <li>IT_owner_ID<b> : </b>(intcode)</li>
-  <li>Request_ID<b> : </b>(intcode)</li>
-  <li>Days_Open<b> : </b>(intcode)</li>
-  </ul>
+  Example: <b>sEVEriTY : MinoR , TiCKeTTyPE : iSsuE , reQueSterSenIORIty : juNIoR , ......<br><br>
+  </b><table>
+  <tr><td>Severity</td><td><b> : </b></td><td>(Type)</td></tr>
+  <tr><td>DaysOpen</td><td><b> : </b></td><td>(intcode)</td></tr>
+  <tr><td>FiledAgainst</td><td><b> : </b></td><td>(Type)</td></tr>
+  <tr><td>Priority</td><td><b> : </b></td><td>(Type)</td></tr>
+  <tr><td>RequesterSeniority</td><td><b> : </b></td><td>(Type)</td></tr>
+  <tr><td>Satisfaction</td><td><b> : </b></td><td>(Type)</td></tr>
+  <tr><td>TicketType</td><td><b> : </b></td><td>(Type)</td></tr>
+  <tr><td>ITownerID</td><td><b> : </b></td><td>(intcode)</td></tr>
+  <tr><td>RequesterID</td><td><b> : </b></td><td>(intcode)</td></tr>
+  </table>
   <br>
-  <input type="text" name="query" placeholder="query for COUNT" style="width: 400px;height: 30px;font-size: 17px;">
+  <input type="text" name="query" placeholder="query for COUNT" style="width: 400px;height: 30px;font-size: 17px;text-align: center;">
   <br><br>
 
   <li><b style="font-style: italic;">REQUEST_ID or IT_OWNER_ID FIELD</b> : Enter id and property to compare:<br><br>
-  Example: <b>iT_oWneR_id : 22 , SeVEritY</b><br><br>
-  <ul>
-    <li>Request_ID<b> : </b>(intcode)</li>
-    <li>IT_owner_ID<b> : </b>(intcode)</li>
-  </ul><br>
+  Example: <b>IT_owner_ID : 22 , Severity</b><br><br>
+  <table>
+    <tr><td>Request_ID</td><td><b> : </b></td><td>(intcode)</td></tr>
+    <tr><td>IT_owner_ID</td><td><b> : </b></td><td>(intcode)</td></tr>
+  </table><br>
   <b>Properties:</b><br>
   <ul>
     <li>Severity</li>
@@ -138,23 +138,23 @@ availableTags.push("{{i}}")
     <li>RequesterID</li>
   </ul>
   <br>
-  <input type="text" name="rqidquery" placeholder="query related to REQUEST_ID/IT_OWNER_ID" style="width: 400px;height: 30px;font-size: 17px">
+  <input type="text" name="rqidquery" placeholder="query related to REQUEST_ID/IT_OWNER_ID" style="width: 400px;height: 30px;font-size: 17px;text-align: center;">
   <br><br>
 
 <li><b style="font-style: italic;">PROPERTY FIELD</b> : Enter a property to visualize it
 <br><br>
-Example : <b>sEvERiTy</b><br><br>
+Example : <b>SEVERITY</b><br><br>
 <ul>
   <li>Severity
-  <li>DaYs_OPen
-  <li>Filed_AGainst
+  <li>DaysOpen
+  <li>FiledAgainst
   <li>Priority
-  <li>ReQuesTer_SeNiority
-  <li>SatiSfaction
-  <li>TickEt_TypE
+  <li>RequesterSeniority
+  <li>Satisfaction
+  <li>TicketType
 </ul>
 <br>
-<input type="text" name="propquery" placeholder="query related to PROPERTY" onfocus="this.value=''" style="width: 400px;height: 30px;font-size: 17px">
+<input type="text" name="propquery" placeholder="query related to PROPERTY" onfocus="this.value=''" style="width: 400px;height: 30px;font-size: 17px;text-align: center;">
 <br><br>
   <input type="submit" name="submit" value="SUBMIT" style="cursor: pointer;height: 30px;border-width: 2pt">
 </form>
