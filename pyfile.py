@@ -281,13 +281,14 @@ def analysis():
 		for i in txtwords:
 			if i not in stopwordsineng:
 				filteredtxtwords.append(i)
+		print(filteredtxtwords)
+
 		ltxt=len(filteredtxtwords)
 		for i in range(0,ltxt,1):
 			if filteredtxtwords[i] in dictforreplacements:
 				filteredtxtwords[i]=dictforreplacements[filteredtxtwords[i]]
 		txt=" ".join(filteredtxtwords)
-		print(txt)
-
+	
 		properties=list(txt.split(','))
 		for i in properties:
 			k,v=i.split(':')
@@ -317,6 +318,8 @@ def analysis():
 		rqid,prop=txtrqid.split(",")
 		rqid,idval=rqid.split(":")
 		rqid=rqid.strip().lower()
+		if rqid in dictforreplacements:
+			rqid=dictforreplacements[rqid]
 		idval=idval.strip()
 		prop=prop.strip().capitalize()
 		if prop=="Daysopen":
