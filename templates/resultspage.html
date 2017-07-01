@@ -76,6 +76,18 @@ availableTags.push("{{i}}")
       });
   } );
   </script>
+  <script>
+    function genqueryclk(){
+      document.getElementById("queryfield").value="";
+      document.getElementById("rqidqueryfield").value="";
+      document.getElementById("propqueryfield").value="";
+    }
+function otherthangenquery()
+{
+  document.getElementById("words").value="";
+}
+
+  </script>
 </head>
 <body>
 
@@ -95,15 +107,14 @@ availableTags.push("{{i}}")
 <fieldset>
   <form action="http://127.0.0.1:5000/analysis/" method="post" target="_blank">
   <input type="hidden" name="password" placeholder="DB password" value="{{passval}}" required>
-  <br>
   <b>NOTE : Mind the typo, reST LeaVE On uS</b><br>
   <center><b>Anything Here !!</b><br><br>
-  <input type="text" name="genquery" id="words" placeholder="Your Query" style="width: 800px;height: 30px;font-size: 17px;text-align: center;" autofocus><br><i>Note: Search is currently in Beta, set your expectations to a minimum!</i>
+  <input type="text" name="genquery" id="words" onfocus="genqueryclk()" placeholder="Your Query" style="width: 800px;height: 30px;font-size: 17px;text-align: center;" autofocus><br><i>Note: Search is currently in Beta, set your expectations to a minimum!</i>
   </center><br><br>
   <ol>
   <li><b style="font-style: italic;">COUNT FIELD</b> : Enter keywords with delimiter as <b><i>','</i></b> :
   <br><br>
-  Example: <b>sEVEriTY : MinoR , TiCKeTTyPE : iSsuE , reQueSterSenIORIty : juNIoR , ......<br><br>
+  Example: <b>SEVERITY : MINOR , TICKETTYPE : ISSUE , REQUESTERSENIORITY : JUNIOR , ......<br><br>
   </b><table>
   <tr><td>Severity</td><td><b> : </b></td><td>(Type)</td></tr>
   <tr><td>DaysOpen</td><td><b> : </b></td><td>(intcode)</td></tr>
@@ -116,14 +127,14 @@ availableTags.push("{{i}}")
   <tr><td>RequesterID</td><td><b> : </b></td><td>(intcode)</td></tr>
   </table>
   <br>
-  <input type="text" name="query" placeholder="query for COUNT" style="width: 400px;height: 30px;font-size: 17px;text-align: center;">
+  <input type="text" name="query" id="queryfield" onfocus="otherthangenquery()" placeholder="query for COUNT" style="width: 400px;height: 30px;font-size: 17px;text-align: center;">
   <br><br>
 
-  <li><b style="font-style: italic;">REQUEST_ID or IT_OWNER_ID FIELD</b> : Enter id and property to compare:<br><br>
-  Example: <b>IT_owner_ID : 22 , Severity</b><br><br>
+  <li><b style="font-style: italic;">REQUESTERID or ITOWNERID FIELD</b> : Enter id and property to compare:<br><br>
+  Example: <b>ITOWNER : 22 , SEVERITY</b><br><br>
   <table>
-    <tr><td>Request_ID</td><td><b> : </b></td><td>(intcode)</td></tr>
-    <tr><td>IT_owner_ID</td><td><b> : </b></td><td>(intcode)</td></tr>
+    <tr><td>REQUESTERID</td><td><b> : </b></td><td>(intcode)</td></tr>
+    <tr><td>ITOWNERID</td><td><b> : </b></td><td>(intcode)</td></tr>
   </table><br>
   <b>Properties:</b><br>
   <ul>
@@ -138,7 +149,7 @@ availableTags.push("{{i}}")
     <li>RequesterID</li>
   </ul>
   <br>
-  <input type="text" name="rqidquery" placeholder="query related to REQUEST_ID/IT_OWNER_ID" style="width: 400px;height: 30px;font-size: 17px;text-align: center;">
+  <input type="text" name="rqidquery" id="rqidqueryfield" onfocus="otherthangenquery()" placeholder="query related to REQUEST_ID/IT_OWNER_ID" style="width: 400px;height: 30px;font-size: 17px;text-align: center;">
   <br><br>
 
 <li><b style="font-style: italic;">PROPERTY FIELD</b> : Enter a property to visualize it
@@ -154,7 +165,7 @@ Example : <b>SEVERITY</b><br><br>
   <li>TicketType
 </ul>
 <br>
-<input type="text" name="propquery" placeholder="query related to PROPERTY" onfocus="this.value=''" style="width: 400px;height: 30px;font-size: 17px;text-align: center;">
+<input type="text" name="propquery" id="propqueryfield" onfocus="otherthangenquery()" placeholder="query related to PROPERTY" style="width: 400px;height: 30px;font-size: 17px;text-align: center;">
 <br><br>
   <input type="submit" name="submit" value="SUBMIT" style="cursor: pointer;height: 30px;border-width: 2pt">
 </form>
