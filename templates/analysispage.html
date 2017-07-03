@@ -3,6 +3,39 @@
 <head>
   <title>Tool - Analysis</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+  <script>
+    function disprqid(){
+document.getElementById('tablerqid').style.visibility="visible";
+    }
+    function dispprop(){
+document.getElementById('tableprop').style.visibility="visible";
+    }
+  </script>
+  <style>
+table, th , td  {                                              /* NICE TABLE Style */
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+}
+table tr:nth-child(odd) {                                       /*CSS Considers 1 based index*/
+  background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+#divrqid{
+{%if valuesrqid|length!=0 and finallist|length==0 and valuesprop|length!=0%}
+margin-left:-800px;
+margin-top:50px;
+{%endif%}
+}
+#divprop{
+{%if valuesprop|length!=0 and (valuesrqid|length!=0 or finallist|length!=0)%}
+margin-left:500px;
+margin-top:-310px;
+{%endif%}
+}
+</style>
 </head>
 <body>
 You are right here on Analysis
@@ -20,12 +53,14 @@ You are right here on Analysis
   <fieldset><canvas id="pie" width="500" height="500"></canvas></fieldset>
 {%endif%}
 {%if finallist|length!=0%}
+<center>
 <table>
-<th><b>{{prop}}</b></th> <th style="padding-left: 20pt"><b>No. of tickets</b></th>
+<th><b>{{prop}}</b></th><th><b>No. of tickets</b></th>
   {%for i in finallist%}
-    <tr><td>{{i[0]}}</td> <td style="padding-left: 40pt"><i>{{i[1]}}</i></td></tr>
+    <tr><td>{{i[0]}}</td><td><i>{{i[1]}}</i></td></tr>
   {%endfor%}
   </table>
+  </center>
 {%endif%}
 </td>
 {%if valuesprop|length!=0%}
@@ -35,13 +70,36 @@ You are right here on Analysis
 {%endif%}
 </tr>
 {%if valuesrqid|length!=0%}
-<tr><td></td></tr>
-<tr><td></td></tr>
 <tr>
   <td style="text-align: center;"><b style="font-size: 20px;">Total tickets by {{rqid}} : {{idval}} are  <i>{{sumofval}}</i></b></td>
 </tr>
 {%endif%}
 </table>
+{%if valuesrqid|length!=0 and finallist|length==0%}
+<div id="divrqid">
+<br>
+<button onclick="disprqid()" style="cursor: pointer;"><img src="{{url_for('static', filename='table.png')}}"></button><br><br>
+<table style="visibility: hidden;" id="tablerqid">
+<th>{{prop}}</th><th>No. of Tickets</th>
+  {%for i in tabletxtrqid%}
+  <tr><td>{{i[0]}}</td><td>{{i[1]}}</td></tr>
+  {%endfor%}
+</table>
+<br><br>
+</div>
+{%endif%}
+{%if valuesprop|length!=0%}
+<div id="divprop">
+<br>
+<button onclick="dispprop()" style="cursor: pointer;"><img src="{{url_for('static', filename='table.png')}}"></button><br><br>
+<table style="visibility: hidden;" id="tableprop">
+<th>{{txtprop}}</th><th>No. of Tickets</th>
+   {%for i in tabletxtprop%}
+  <tr><td>{{i[0]}}</td><td>{{i[1]}}</td></tr>
+  {%endfor%}
+</table>
+</div>
+{%endif%}
 </center>
 <script>
  Chart.defaults.global.responsive = true;
