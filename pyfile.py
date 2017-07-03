@@ -11,11 +11,9 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
 ALLOWED_EXTENSIONS = set(['csv'])
-UPLOAD_FOLDER="C:/Users/ANIL KAPOOR/Documents/Neo4j/Ticketanalysisdb/import/"
 
 app=Flask(__name__)
 app.secret_key = 'random string'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_files(filename):
     return '.' in filename and \
@@ -52,6 +50,9 @@ def results():
 	else:
 		st=time.time()
 		passw=request.form['pass']
+		adid=request.form['adid'].strip().upper()
+		UPLOAD_FOLDER="C:/Users/"+adid+"/Documents/Neo4j/Ticketanalysisdb/import/"
+		app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 		gr=Graph(password=passw)
 		securedfile=secure_filename(file.filename)
 
@@ -66,7 +67,7 @@ def results():
 		itolist=set()
 		dolist=set()
 
-		with open('C:\\Users\\ANIL KAPOOR\\Documents\\Neo4j\\Ticketanalysisdb\\import\\'+securedfile) as csvfile:
+		with open('C:\\Users\\'+adid+'\\Documents\\Neo4j\\Ticketanalysisdb\\import\\'+securedfile) as csvfile:
 			reader = csv.DictReader(csvfile)
 			for row in reader:
 				tt=row['Ticket_Type']
