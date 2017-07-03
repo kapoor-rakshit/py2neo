@@ -197,6 +197,8 @@ def analysis():
 	valitownersrequesters=[]
 	labelitownersrequesters=[]
 	finallist=[]
+	tabletxtrqid=[]
+	tabletxtprop=[]
 	rqid=""
 	idval=""
 	prop=""
@@ -337,6 +339,7 @@ def analysis():
 		if prop=="Itownerid":
 			rqid="RequesterID"
 			rqidq=gr.run("match (a:tempdata{"+"request_id:"+idval+"})--(n:IT_OWNER_ID) return n.ITOWNERID,count(n)").data()
+		#print(rqidq)
 		
 		for i in rqidq:
 			for j,k in i.items():
@@ -350,6 +353,8 @@ def analysis():
 			valitownersrequesters=valuesrqid
 			labelitownersrequesters=labelsrqid
 			finallist=list(zip(labelitownersrequesters,valitownersrequesters))
+		else:
+			tabletxtrqid=list(zip(labelsrqid,valuesrqid))
 		s=sum(valuesrqid)
 	#print(labelsrqid)
 	#print(valuesrqid)
@@ -369,6 +374,7 @@ def analysis():
 		for i in range(0,l,2):
 			labelsprop.append(temppropvalues[i])
 			valuesprop.append(temppropvalues[i+1])
+		tabletxtprop=list(zip(labelsprop,valuesprop))
 	#print(labelsprop)
 	#print(valuesprop)
 
@@ -380,7 +386,7 @@ def analysis():
 		propsstr="NA"
 		valtochart="NA"
 
-	return render_template('analysispage.html',valtochart=valtochart,propsstr=propsstr,valuesrqid=valuesrqid,sumofval=s,labelsrqid=labelsrqid,finallist=finallist,rqid=rqid,idval=idval,prop=prop,labelsprop=labelsprop,valuesprop=valuesprop,txtprop=txtprop)
+	return render_template('analysispage.html',valtochart=valtochart,propsstr=propsstr,valuesrqid=valuesrqid,sumofval=s,labelsrqid=labelsrqid,finallist=finallist,tabletxtrqid=tabletxtrqid,rqid=rqid,idval=idval,prop=prop,labelsprop=labelsprop,valuesprop=valuesprop,tabletxtprop=tabletxtprop,txtprop=txtprop)
 
 
 if __name__=='__main__':
