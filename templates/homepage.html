@@ -9,21 +9,20 @@
 <br>
 {% with messages = get_flashed_messages() %}
          {% if messages %}
-         <fieldset style="background-color: #fff;">
             <ul>
             <li><b>Attention !!</b></li>
                {% for message in messages %}
                <li>{{ message }}</li>
                {% endfor %}
             </ul>
-            </fieldset>
          {% endif %}
       {% endwith %}
-      <br><br>
 <fieldset style="background-color: #fff;">
 <legend><img src="{{url_for('static', filename='Wipro.png')}}" height="100px" width="125px"></legend>
    <form action="http://127.0.0.1:5000/results/" method="post" enctype="multipart/form-data">
    <dl>
+   <dt>Username AD ID</dt>
+   <dd><input type="text" name="adid" placeholder="AD ID Username" autocomplete="off" style="text-align: center;" required></dd><br>
    <dt>DB password</dt>
    <dd><input type="password" name="pass" placeholder="Password" autocomplete="off" style="text-align: center;" required></dd><br>
    <dt>Choose your file</dt>
@@ -31,16 +30,17 @@
    </dl>
    <input type="submit" name="sbutton" value="UPLOAD" align="center" style="cursor: pointer;height: 30px">
    </form>
-<br><br><br><br>
+<br><br><br>
 
 <form action="http://127.0.0.1:5000/alreadyuploaded/" method="post">
+<input type="text" name="adidalr" placeholder="AD ID Username" autocomplete="off" style="text-align: center;" required><br><br>
 <input type="password" name="password" placeholder="DB Password" autocomplete="off" style="text-align: center;" required><br><br>
 <b style="font-size: 23px;font-style: italic;color: darkred">Data already uploaded ?</b>&nbsp &nbsp
 <input type="submit" name="ssbutton" value="Your Query Here" style="cursor: pointer;height: 30px;"> 
 </form>
 
 </fieldset>
-<br><br>
+<br>
 <center><i>Developed by : Rakshit Kapoor<br>kapoor_rakshit@yahoo.co.in</i></center>
 </body>
 </html>
