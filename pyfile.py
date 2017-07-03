@@ -232,7 +232,7 @@ def analysis():
 
 	dictforreplacements={"request":"Request","issue":"Issue","unclassified":"0 - Unclassified","minor":"1 - Minor","normal":"2 - Normal","major":"3 - Major","critical":"4 - Critical","junior":"1 - Junior","regular":"2 - Regular","senior":"3 - Senior",
 	"management":"4 - Management","systems":"Systems","software":"Software","hardware":"Hardware","login":"Access/Login","access":"Access/Login","access/login":"Access/Login","unassigned":"0 - Unassigned","low":"1 - Low","medium":"2 - Medium","high":"3 - High",
-	"unknown":"0 - Unknown","unsatisfied":"1 - Unsatisfied","satisfied":"2 - Satisfied","highlysatisfied":"3 - Highly satisfied",
+	"unknown":"0 - Unknown","unsatisfied":"1 - Unsatisfied","satisfied":"2 - Satisfied","highlysatisfied":"3 - Highly satisfied","highly satisfied":"3 - Highly satisfied",
 	"filedagainst":"filed_against","filed":"filed_against","filed_against":"filed_against","tickettype":"ticket_type","tickettypes":"ticket_type","ticket_type":"ticket_type","requesterseniority":"requester_seniority","requester_seniority":"requester_seniority","seniority":"requester_seniority","severity":"severity",
 	"daysopen":"days_open","days_open":"days_open","days":"days_open","priority":"priority","satisfaction":"satisfaction","requesterid":"request_id","requestid":"request_id","requester":"request_id",
 	"itownerid":"it_owner_id","itowner":"it_owner_id","owner":"it_owner_id"}
@@ -279,26 +279,22 @@ def analysis():
 			break
 
 	if not txt=="":
-		txtwords=word_tokenize(txt)
-		filteredtxtwords=[]
-		for i in txtwords:
-			if i not in stopwordsineng:
-				filteredtxtwords.append(i)
-		print(filteredtxtwords)
-
-		ltxt=len(filteredtxtwords)
-		for i in range(0,ltxt,1):
-			if filteredtxtwords[i] in dictforreplacements:
-				filteredtxtwords[i]=dictforreplacements[filteredtxtwords[i]]
-		txt=" ".join(filteredtxtwords)
-	
 		properties=list(txt.split(','))
 		for i in properties:
 			k,v=i.split(':')
+
+			if k.strip().lower() in dictforreplacements:
+				k=dictforreplacements[k.strip().lower()]
+			if v.strip().lower() in dictforreplacements:
+				v=dictforreplacements[v.strip().lower()]
+
 			keys.append(k.strip().lower())
-			vals.append(v.strip())
+			if v.strip().title()=="3 - Highly Satisfied":
+				vals.append("3 - Highly satisfied")
+			else:
+				vals.append(v.strip().title())
 		props=dict(zip(keys,vals))
-		#print(props)
+		print(props)
 		propsstr="{"
 		for i,j in props.items():
 			propsstr+=i+":"
