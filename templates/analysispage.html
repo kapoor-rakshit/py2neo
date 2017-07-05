@@ -25,14 +25,14 @@ table tr:nth-child(even) {
 }
 #divrqid{
 {%if valuesrqid|length!=0 and finallist|length==0 and valuesprop|length!=0%}
-margin-left:-800px;
-margin-top:40px;
+position:absolute;                                            /*Align to absolute to each element*/
+margin-left:170px;
 {%endif%}
 }
 #divprop{
 {%if valuesprop|length!=0 and (valuesrqid|length!=0 or finallist|length!=0)%}
-margin-left:500px;
-margin-top:-280px;
+position:absolute;
+margin-left:870px;
 {%endif%}
 }
 </style>
