@@ -25,7 +25,7 @@ def home():
 
 @app.route('/alreadyuploaded/',methods=['post'])
 def alreadyuploaded():
-	passw=request.form["password"]
+	passw=request.form["pass"]
 	gr=Graph(password=passw)
 	tx=gr.begin()
 	a=Node("suggestions",query="Dummy")
