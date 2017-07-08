@@ -6,7 +6,7 @@
 </head>
 <body>
 <marquee style="font-style: italic;color: #f00;font-size: 25px"><b>Welcome to WIPRO - TicketAnalysisTool</b></marquee>
-<br>
+<br><br>
 {% with messages = get_flashed_messages() %}
          {% if messages %}
             <ul>
@@ -26,18 +26,13 @@
    <dt>DB password</dt>
    <dd><input type="password" name="pass" placeholder="Password" autocomplete="off" style="text-align: center;" required></dd><br>
    <dt>Choose your file</dt>
-   <dd><input type="file" name="file" align="center" style="cursor: pointer;"></dd><br>
+   <dd><input type="file" name="file" align="center" style="cursor: pointer;"><input type="submit" name="sbutton" value="UPLOAD" align="center" style="cursor: pointer;height: 30px;"></dd><br>
    </dl>
-   <input type="submit" name="sbutton" value="UPLOAD" align="center" style="cursor: pointer;height: 30px">
+   
+   <br><br><br>
+   <b style="font-size: 23px;font-style: italic;color: darkred">Data already uploaded ?</b>&nbsp &nbsp &nbsp
+   <input type="submit" name="ssbutton" formaction="http://127.0.0.1:5000/alreadyuploaded/" value="Your Query Here" style="cursor: pointer;height: 30px;"> 
    </form>
-<br><br><br>
-
-<form action="http://127.0.0.1:5000/alreadyuploaded/" method="post">
-<input type="text" name="adidalr" placeholder="AD ID Username" autocomplete="off" style="text-align: center;" required><br><br>
-<input type="password" name="password" placeholder="DB Password" autocomplete="off" style="text-align: center;" required><br><br>
-<b style="font-size: 23px;font-style: italic;color: darkred">Data already uploaded ?</b>&nbsp &nbsp
-<input type="submit" name="ssbutton" value="Your Query Here" style="cursor: pointer;height: 30px;"> 
-</form>
 
 </fieldset>
 <br>
